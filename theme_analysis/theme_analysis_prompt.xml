@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WeeklyThemeAnalysisFramework version="advanced" implementation="institutional">
+  
+  <AnalyticalFoundationAndThemeStandards section="I">
+    
+    <InvestmentContextAndThemeFramework type="json">
+      <AnalysisScope>
+        <ThemeUniverse themes="AI, Nuclear, Defense, Cybersecurity, Climate, Biotech, Space, Energy Transition"/>
+        <MarketParticipants participants="institutional funds, hedge funds, pension funds, sovereign wealth"/>
+        <RiskFramework framework="theme lifecycle positioning, concentration risk, rotation timing"/>
+        <LiquidityConsiderations factors="ETF creation/redemption capacity, underlying stock liquidity"/>
+        <TimeHorizon horizons="tactical theme trades, strategic theme allocation, structural theme shifts"/>
+      </AnalysisScope>
+      <AnalysisWindow period="EXACT Monday-Sunday period" requirement="all theme events must fall within dates"/>
+      <ThemeValidation minMarketCap="$50B" requirements="tradeable ETF proxies, institutional participation evidence"/>
+    </InvestmentContextAndThemeFramework>
+
+    <FivePerspectiveThemeAnalysisFramework>
+      
+      <ThemeDiscoveryStrategist>
+        <AnalysisMethod>Earnings call keyword frequency analysis and sentiment shifts</AnalysisMethod>
+        <AnalysisMethod>Corporate capex allocation announcements and strategic initiatives</AnalysisMethod>
+        <AnalysisMethod>Government policy calendar and procurement pipeline mapping</AnalysisMethod>
+        <AnalysisMethod>Patent filing trends and technological breakthrough monitoring</AnalysisMethod>
+      </ThemeDiscoveryStrategist>
+
+      <ThemePositioningAnalyst>
+        <AnalysisMethod>ETF creation/redemption flow analysis across theme categories</AnalysisMethod>
+        <AnalysisMethod>Institutional holdings concentration and rotation patterns via 13F filings</AnalysisMethod>
+        <AnalysisMethod>Options positioning and unusual activity in theme names</AnalysisMethod>
+        <AnalysisMethod>CFTC futures positioning for theme-adjacent sectors</AnalysisMethod>
+      </ThemePositioningAnalyst>
+
+      <CrossThemeSynthesist>
+        <AnalysisMethod>Theme correlation matrices and rotation pattern identification</AnalysisMethod>
+        <AnalysisMethod>Sector overlap analysis and cannibalization effects</AnalysisMethod>
+        <AnalysisMethod>Factor loading analysis (growth/value, large/small cap theme tilts)</AnalysisMethod>
+        <AnalysisMethod>Geographic and currency exposure mapping per theme</AnalysisMethod>
+      </CrossThemeSynthesist>
+
+      <ThemeRiskSpecialist>
+        <AnalysisMethod>Concentration risk assessment (top 5 holdings per theme)</AnalysisMethod>
+        <AnalysisMethod>Crowding indicators and sentiment extreme identification</AnalysisMethod>
+        <AnalysisMethod>Event risk calendars and binary outcome mapping</AnalysisMethod>
+        <AnalysisMethod>Liquidity stress testing for theme ETF underlying assets</AnalysisMethod>
+      </ThemeRiskSpecialist>
+
+    </FivePerspectiveThemeAnalysisFramework>
+
+  </AnalyticalFoundationAndThemeStandards>
+
+  <ThemeConsensusScoreMethodology section="II">
+    
+    <AdvancedTCSCalculationFramework>
+      
+      <BaseTCSFormula>
+        <Formula>TCS = 0.25 × ThemePerformance + 0.20 × InstitutionalPositioning + 0.20 × NarrativeMomentum + 0.15 × OptionsActivity + 0.10 × PolicySupport + 0.10 × CorporateAdoption</Formula>
+      </BaseTCSFormula>
+
+      <ComponentBreakdown>
+        
+        <ThemePerformance weight="0.25" range="0-100">
+          <Component name="Theme ETF performance vs SPY" weight="30%"/>
+          <Component name="Breadth: % theme constituents above 50/200 DMA" weight="25%"/>
+          <Component name="Relative strength vs sector/style factors" weight="25%"/>
+          <Component name="Volatility-adjusted returns and Sharpe ratios" weight="20%"/>
+        </ThemePerformance>
+
+        <InstitutionalPositioning weight="0.20" range="0-100">
+          <Component name="ETF creation/redemption velocity and persistence" weight="40%"/>
+          <Component name="13F filing changes in theme holdings" weight="30%"/>
+          <Component name="Mutual fund category flows and asset gathering" weight="20%"/>
+          <Component name="Hedge fund 13F concentration changes" weight="10%"/>
+        </InstitutionalPositioning>
+
+        <NarrativeMomentum weight="0.20" range="0-100">
+          <Component name="Earnings call mention frequency and sentiment" weight="35%"/>
+          <Component name="Media coverage density and tone analysis" weight="25%"/>
+          <Component name="Corporate announcement frequency" weight="25%"/>
+          <Component name="Social media sentiment momentum" weight="15%"/>
+        </NarrativeMomentum>
+
+        <OptionsActivity weight="0.15" range="0-100">
+          <Component name="Put/call ratio deviations from historical norms" weight="40%"/>
+          <Component name="Implied volatility percentile ranking" weight="30%"/>
+          <Component name="Unusual options activity frequency" weight="20%"/>
+          <Component name="Options skew and tail hedging patterns" weight="10%"/>
+        </OptionsActivity>
+
+        <PolicySupport weight="0.10" range="0-100">
+          <Component name="Government spending allocation and growth rates" weight="40%"/>
+          <Component name="Regulatory development favorability" weight="30%"/>
+          <Component name="Policy timeline certainty and implementation probability" weight="20%"/>
+          <Component name="Bipartisan support indicators" weight="10%"/>
+        </PolicySupport>
+
+        <CorporateAdoption weight="0.10" range="0-100">
+          <Component name="Capex allocation announcements to theme areas" weight="35%"/>
+          <Component name="M&A activity frequency and premium levels" weight="25%"/>
+          <Component name="Partnership and joint venture announcements" weight="25%"/>
+          <Component name="R&D spending allocation and patent activity" weight="15%"/>
+        </CorporateAdoption>
+
+      </ComponentBreakdown>
+
+    </AdvancedTCSCalculationFramework>
+
+    <TCSAdjustmentsAndModifiers>
+      
+      <CrowdingPenalty range="0-15" type="penalty">
+        <Penalty condition="Concentration: >70% of theme in top 5 names" points="-5"/>
+        <Penalty condition="Options froth: IV >90th percentile + skew extremes" points="-5"/>
+        <Penalty condition="Institutional overweight: >2 standard deviations above historical" points="-5"/>
+      </CrowdingPenalty>
+
+      <CatalystBonus range="0-10" type="bonus">
+        <Bonus condition="High-probability policy catalyst within 30 days" points="+5"/>
+        <Bonus condition="Major corporate event with >80% success probability" points="+3"/>
+        <Bonus condition="Technological breakthrough with commercial timeline" points="+2"/>
+      </CatalystBonus>
+
+      <CrossThemeInterference range="-5 to +5" type="adjustment">
+        <Adjustment condition="Competing themes gaining momentum" points="-3 to -5"/>
+        <Adjustment condition="Complementary themes providing tailwinds" points="+2 to +5"/>
+        <Adjustment condition="Neutral/independent theme evolution" points="0"/>
+      </CrossThemeInterference>
+
+    </TCSAdjustmentsAndModifiers>
+
+    <TimeHorizonTCSWeighting>
+      
+      <TacticalTCS timeframe="1-8 weeks">
+        <Formula>Tactical = 0.35×Performance + 0.25×Options + 0.20×Flows + 0.15×Narrative + 0.05×Policy</Formula>
+      </TacticalTCS>
+
+      <StrategicTCS timeframe="2-6 months">
+        <Formula>Strategic = 0.30×Positioning + 0.25×Policy + 0.20×Corporate + 0.15×Performance + 0.10×Narrative</Formula>
+      </StrategicTCS>
+
+      <StructuralTCS timeframe="6-18 months">
+        <Formula>Structural = 0.35×Policy + 0.30×Corporate + 0.20×Positioning + 0.10×Narrative + 0.05×Performance</Formula>
+      </StructuralTCS>
+
+    </TimeHorizonTCSWeighting>
+
+  </ThemeConsensusScoreMethodology>
+
+  <ThemeNarrativeClustering section="III">
+    
+    <PrimaryThemeClusters>
+      
+      <InnovationAndTechnologyCluster clusterId="1">
+        <ThemeCategory name="AI/Machine Learning" focus="Compute infrastructure, software platforms, enterprise adoption"/>
+        <ThemeCategory name="Biotechnology" focus="Drug discovery, precision medicine, synthetic biology"/>
+        <ThemeCategory name="Space Technology" focus="Satellite communications, launch services, space mining"/>
+        <ThemeCategory name="Quantum Computing" focus="Hardware development, software applications, cryptography"/>
+        <CrossCorrelationMatrix purpose="Track technology spillovers and resource competition"/>
+        <SharedRiskFactors factors="Regulatory uncertainty, talent competition, capital intensity"/>
+      </InnovationAndTechnologyCluster>
+
+      <SecurityAndDefenseCluster clusterId="2">
+        <ThemeCategory name="Cybersecurity" focus="Enterprise security, critical infrastructure protection"/>
+        <ThemeCategory name="Defense Technology" focus="Advanced weapons systems, autonomous platforms"/>
+        <ThemeCategory name="National Security" focus="Supply chain resilience, strategic material independence"/>
+        <ThemeCategory name="Border Security" focus="Immigration technology, surveillance systems"/>
+        <CrossCorrelationMatrix purpose="Geopolitical event sensitivity and budget correlation"/>
+        <SharedRiskFactors factors="Government spending cycles, international tension levels"/>
+      </SecurityAndDefenseCluster>
+
+      <EnergyTransitionCluster clusterId="3">
+        <ThemeCategory name="Nuclear Renaissance" focus="SMR development, uranium mining, plant construction"/>
+        <ThemeCategory name="Renewable Infrastructure" focus="Solar/wind deployment, grid modernization"/>
+        <ThemeCategory name="Energy Storage" focus="Battery technology, grid-scale storage, materials"/>
+        <ThemeCategory name="Clean Transportation" focus="EVs, charging infrastructure, alternative fuels"/>
+        <CrossCorrelationMatrix purpose="Commodity price sensitivity and policy dependence"/>
+        <SharedRiskFactors factors="Interest rate sensitivity, regulatory shifts, commodity volatility"/>
+      </EnergyTransitionCluster>
+
+      <DemographicAndSocialCluster clusterId="4">
+        <ThemeCategory name="Aging Population" focus="Healthcare technology, senior services, pharmaceuticals"/>
+        <ThemeCategory name="Urban Development" focus="Smart cities, infrastructure, real estate technology"/>
+        <ThemeCategory name="Education Technology" focus="Online learning, skills training, educational content"/>
+        <ThemeCategory name="Social Impact" focus="ESG investing, impact measurement, sustainable development"/>
+        <CrossCorrelationMatrix purpose="Demographic trend alignment and social outcome measurement"/>
+        <SharedRiskFactors factors="Social policy changes, demographic assumption shifts"/>
+      </DemographicAndSocialCluster>
+
+    </PrimaryThemeClusters>
+
+    <ThemeInteractionAnalysis>
+      
+      <SubstitutionRelationships type="competitive">
+        <Relationship themes="Nuclear vs. Renewable Energy" driver="policy preference shifts"/>
+        <Relationship themes="AI vs. Cybersecurity" driver="automation vs. human expertise"/>
+        <Relationship themes="Defense vs. Space" driver="budget allocation competition"/>
+      </SubstitutionRelationships>
+
+      <AmplificationRelationships type="synergistic">
+        <Relationship themes="AI + Cybersecurity" outcome="AI-powered security solutions"/>
+        <Relationship themes="Nuclear + Defense" outcome="nuclear-powered military applications"/>
+        <Relationship themes="Space + Defense" outcome="military satellite applications"/>
+      </AmplificationRelationships>
+
+      <IndependenceAssessment type="uncorrelated">
+        <Relationship themes="Biotech vs. Energy Transition" correlation="minimal overlap"/>
+        <Relationship themes="Education vs. Defense" correlation="separate budget cycles"/>
+        <Relationship themes="Aging Demographics vs. Space Technology" correlation="different time horizons"/>
+      </IndependenceAssessment>
+
+    </ThemeInteractionAnalysis>
+
+  </ThemeNarrativeClustering>
+
+  <AdvancedPositioningAndFlowAnalysis section="IV">
+    
+    <MultiSourcePositioningFramework>
+      
+      <ETFEcosystemAnalysis type="json">
+        <PrimaryETFs description="Pure-play theme ETFs with >$500M AUM"/>
+        <SecondaryETFs description="Sector ETFs with significant theme exposure"/>
+        <EmergingETFs description="New theme ETFs with rapid asset gathering"/>
+        <LiquidationRisk description="Theme ETFs with persistent outflows and shrinking AUM"/>
+      </ETFEcosystemAnalysis>
+
+      <InstitutionalHoldingAnalysis>
+        <AnalysisMethod scope="13F filing trend analysis for top 50 theme holders"/>
+        <AnalysisMethod scope="Pension fund allocation shifts to thematic strategies"/>
+        <AnalysisMethod scope="Sovereign wealth direct theme investments"/>
+        <AnalysisMethod scope="Family office allocation survey data"/>
+      </InstitutionalHoldingAnalysis>
+
+      <OptionsMarketMicrostructure>
+        <AnalysisMethod type="ETF options" focus="open interest trends"/>
+        <AnalysisMethod type="single-name options" focus="activity in theme leaders"/>
+        <AnalysisMethod type="volatility surface" focus="analysis and skew patterns"/>
+        <AnalysisMethod type="dealer positioning" focus="gamma exposure effects"/>
+      </OptionsMarketMicrostructure>
+
+    </MultiSourcePositioningFramework>
+
+    <FlowDecompositionAnalysis>
+      
+      <ActiveVsPassiveFlowSeparation>
+        <FlowType>Index-driven flows vs discretionary allocation</FlowType>
+        <FlowType>ETF arbitrage flows vs fundamental demand</FlowType>
+        <FlowType>Systematic rebalancing vs tactical positioning</FlowType>
+        <FlowType>Factor-driven flows vs theme-specific demand</FlowType>
+      </ActiveVsPassiveFlowSeparation>
+
+      <GeographicFlowMapping>
+        <FlowType name="Domestic vs. international theme allocation"/>
+        <FlowType name="Emerging market theme participation"/>
+        <FlowType name="Currency hedging patterns in theme investments"/>
+        <FlowType name="Cross-border M&A theme impact"/>
+      </GeographicFlowMapping>
+
+    </FlowDecompositionAnalysis>
+
+  </AdvancedPositioningAndFlowAnalysis>
+
+  <ScenarioModelingAndRiskAssessment section="V">
+    
+    <ThreeScenarioFrameworkPerTheme>
+      
+      <BaseCaseConstruction probability="60%">
+        <Characteristic description="Current TCS trajectory maintenance"/>
+        <Characteristic description="Normal policy/corporate announcement cadence"/>
+        <Characteristic description="Typical seasonal and cyclical patterns"/>
+        <Characteristic description="Historical volatility ranges"/>
+      </BaseCaseConstruction>
+
+      <AccelerationCase probability="25%">
+        <Catalyst description="Policy breakthrough or major corporate adoption"/>
+        <Catalyst description="Technological advancement or competitive advantage"/>
+        <Catalyst description="Market structure shift favoring theme"/>
+        <Catalyst description="Cross-theme amplification effects"/>
+      </AccelerationCase>
+
+      <DecelerationCase probability="15%">
+        <Threat description="Policy setback or competitive threat emergence"/>
+        <Threat description="Funding constraint or market structure headwind"/>
+        <Threat description="Regulatory challenge or technological disruption"/>
+        <Threat description="Cross-theme substitution pressure"/>
+      </DecelerationCase>
+
+    </ThreeScenarioFrameworkPerTheme>
+
+    <ThemeRiskAssessmentMatrix>
+      
+      <SystematicRisks category="market-wide">
+        <RiskFactor>Interest rate sensitivity by theme lifecycle stage</RiskFactor>
+        <RiskFactor>Regulatory risk exposure and policy dependency</RiskFactor>
+        <RiskFactor>Geopolitical sensitivity and international exposure</RiskFactor>
+        <RiskFactor>Commodity price correlation and input cost pressure</RiskFactor>
+      </SystematicRisks>
+
+      <IdiosyncraticRisks category="theme-specific">
+        <RiskFactor>Key person/company concentration risk</RiskFactor>
+        <RiskFactor>Technology disruption and obsolescence risk</RiskFactor>
+        <RiskFactor>Patent cliff and IP expiration schedules</RiskFactor>
+        <RiskFactor>Execution risk and capital intensity challenges</RiskFactor>
+      </IdiosyncraticRisks>
+
+      <LiquidityRisks category="structural">
+        <RiskFactor>ETF underlying asset liquidity stress testing</RiskFactor>
+        <RiskFactor>Market maker capacity and redemption risk</RiskFactor>
+        <RiskFactor>Cross-asset correlation during stress periods</RiskFactor>
+        <RiskFactor>Funding availability and credit access</RiskFactor>
+      </LiquidityRisks>
+
+    </ThemeRiskAssessmentMatrix>
+
+  </ScenarioModelingAndRiskAssessment>
+
+  <SystematicExecutionProcess section="VI">
+    
+    <WeeklyAnalysisWorkflowEnhanced>
+      
+      <Monday day="1" focus="Data Collection & Validation">
+        <Task description="Theme ETF performance and flow data extraction"/>
+        <Task description="Earnings call transcript keyword analysis"/>
+        <Task description="Government policy calendar and announcement tracking"/>
+        <Task description="Options activity and positioning data collection"/>
+      </Monday>
+
+      <Tuesday day="2" focus="Signal Processing & Scoring">
+        <Task description="TCS component calculation and normalization"/>
+        <Task description="Cross-theme correlation matrix updating"/>
+        <Task description="Historical pattern matching and analog identification"/>
+        <Task description="Crowding and sentiment extreme identification"/>
+      </Tuesday>
+
+      <Wednesday day="3" focus="Scenario Construction">
+        <Task description="Three-scenario probability assessment per theme"/>
+        <Task description="Risk factor sensitivity analysis"/>
+        <Task description="Cross-theme interaction modeling"/>
+        <Task description="Catalyst timeline and probability assignment"/>
+      </Wednesday>
+
+      <Thursday day="4" focus="Cross-Asset Impact Analysis">
+        <Task description="Sector allocation implications by theme strength"/>
+        <Task description="Factor tilt recommendations (growth/value, size, momentum)"/>
+        <Task description="Geographic and currency exposure adjustments"/>
+        <Task description="Hedge ratio calculations for theme concentration"/>
+      </Thursday>
+
+      <Friday day="5" focus="Synthesis & Output Generation">
+        <Task description="Final TCS scoring and ranking"/>
+        <Task description="Investment thesis summary per theme"/>
+        <Task description="Risk management recommendations"/>
+        <Task description="JSON output generation and validation"/>
+      </Friday>
+
+    </WeeklyAnalysisWorkflowEnhanced>
+
+    <QualityAssuranceProtocol>
+      
+      <ValidationGates>
+        <Gate name="Data Integrity" requirement="Source verification and date boundary compliance"/>
+        <Gate name="Calculation Accuracy" requirement="TCS component verification and cross-checks"/>
+        <Gate name="Historical Consistency" requirement="Pattern recognition validation and analog quality"/>
+        <Gate name="Cross-Theme Logic" requirement="Interaction model consistency and correlation validation"/>
+        <Gate name="Risk Assessment" requirement="Scenario probability verification and catalyst timing"/>
+      </ValidationGates>
+
+    </QualityAssuranceProtocol>
+
+  </SystematicExecutionProcess>
+
+  <OutputSpecification section="VII">
+    
+    <ComprehensiveJSONStructure type="json">
+      
+      <WeeklyThemeAnalysis>
+        
+        <ExecutiveSummary>
+          <DominantThemes type="array" description="ranked by TCS with lifecycle classification"/>
+          <MajorRotations type="array" description="outflow and inflow themes with magnitude"/>
+          <RiskRegime description="risk-on themes, risk-off themes, mixed signals assessment"/>
+          <ConcentrationAlerts type="array" description="crowded themes requiring attention"/>
+          <EmergingOpportunities type="array" description="low TCS themes with acceleration potential"/>
+        </ExecutiveSummary>
+
+        <ThemeScorecard type="array">
+          <Theme>
+            <ThemeName description="specific theme identification"/>
+            <TCSScore>
+              <Tactical range="0-100" timeframe="1-8 week"/>
+              <Strategic range="0-100" timeframe="2-6 month"/>
+              <Structural range="0-100" timeframe="6-18 month"/>
+            </TCSScore>
+            <ComponentBreakdown>
+              <Performance range="0-100" description="with trend direction"/>
+              <Positioning range="0-100" description="with institutional evidence"/>
+              <Narrative range="0-100" description="with momentum assessment"/>
+              <Options range="0-100" description="with sentiment classification"/>
+              <Policy range="0-100" description="with timeline certainty"/>
+              <Corporate range="0-100" description="with adoption acceleration"/>
+            </ComponentBreakdown>
+            <LifecycleStage options="emerging/accelerating/consensus/crowded/exhausted"/>
+            <CrowdingRisk level="low/moderate/high" description="with specific indicators"/>
+            <Scenarios>
+              <BaseCase>
+                <Probability description="percentage with confidence range"/>
+                <Description text="most likely path with key assumptions"/>
+                <TCSForecast description="directional TCS movement prediction"/>
+                <Timeframe description="expected duration of current trajectory"/>
+              </BaseCase>
+              <AccelerationCase>
+                <Probability description="percentage with confidence range"/>
+                <Catalysts type="array" description="specific events with probability and timing"/>
+                <TCSPotential description="upside TCS target with timeframe"/>
+                <RiskFactors type="array" description="what could prevent acceleration"/>
+              </AccelerationCase>
+              <DecelerationCase>
+                <Probability description="percentage with confidence range"/>
+                <Threats type="array" description="specific risks with probability and timing"/>
+                <TCSDownside description="downside TCS target with timeframe"/>
+                <DefensiveFactors type="array" description="what could limit decline"/>
+              </DecelerationCase>
+            </Scenarios>
+            <InvestmentImplications>
+              <PrimaryETFs type="array" description="ticker symbols with allocation rationale"/>
+              <SecondaryExposure type="array" description="sector ETFs with theme overlap"/>
+              <IndividualNames type="array" description="top theme stocks with conviction level"/>
+              <HedgingOptions type="array" description="downside protection instruments"/>
+              <SizingGuidance description="position size recommendation based on TCS and risk"/>
+            </InvestmentImplications>
+            <MonitoringPriorities type="array">
+              <Priority>
+                <Catalyst description="specific upcoming event"/>
+                <Date format="YYYY-MM-DD" description="with uncertainty range"/>
+                <Impact description="potential TCS score change magnitude"/>
+                <MarketThresholds description="specific levels indicating outcome"/>
+              </Priority>
+            </MonitoringPriorities>
+          </Theme>
+        </ThemeScorecard>
+
+        <CrossThemeAnalysis>
+          <CorrelationMatrix description="theme-to-theme correlation coefficients"/>
+          <SubstitutionRelationships type="array" description="competing themes with substitution elasticity"/>
+          <AmplificationRelationships type="array" description="reinforcing themes with spillover effects"/>
+          <RotationPatterns>
+            <CapitalFlow description="dominant rotation direction and magnitude"/>
+            <TimingIndicators description="leading indicators for theme rotation"/>
+            <VelocityAssessment description="speed of rotation based on historical patterns"/>
+          </RotationPatterns>
+          <ConcentrationRisk>
+            <SystemicThemes type="array" description="themes with broad market impact"/>
+            <IdiosyncraticThemes type="array" description="standalone themes with limited spillover"/>
+            <CrowdingMetrics description="aggregate crowding across theme universe"/>
+          </ConcentrationRisk>
+        </CrossThemeAnalysis>
+
+        <RiskAssessment>
+          <SystematicRisks>
+            <InterestRateSensitivity description="theme sensitivity to rate changes"/>
+            <GeopoliticalExposure description="theme vulnerability to international events"/>
+            <RegulatoryRisk description="policy uncertainty impact by theme"/>
+            <LiquidityRisk description="theme ETF and underlying liquidity assessment"/>
+          </SystematicRisks>
+          <MarketStructureRisks>
+            <ETFConcentration description="single ETF dominance risk by theme"/>
+            <UnderlyingLiquidity description="stock level liquidity for theme constituents"/>
+            <OptionsGamma description="dealer positioning impact on theme volatility"/>
+            <CorrelationBreakdown description="historical correlation stability assessment"/>
+          </MarketStructureRisks>
+        </RiskAssessment>
+
+      </WeeklyThemeAnalysis>
+
+    </ComprehensiveJSONStructure>
+
+    <FrameworkNote>
+      This framework maintains the sophisticated analytical approach while being specifically optimized for theme identification and analysis. The complexity is preserved but channeled into theme-specific clustering and cross-theme relationship modeling.
+    </FrameworkNote>
+
+  </OutputSpecification>
+
+</WeeklyThemeAnalysisFramework>
