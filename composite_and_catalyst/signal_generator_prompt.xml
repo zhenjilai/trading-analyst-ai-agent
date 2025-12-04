@@ -1,0 +1,453 @@
+<XAUUSDSignalGenerator system_type="real_time_trading" response_capability="millisecond_level">
+    
+    <SystemIdentity role="real_time_signal_generator" asset="XAUUSD">
+        <Capability type="data_processing">Process live economic data releases</Capability>
+        <Capability type="pattern_recognition">Convert data into immediate, actionable XAUUSD trading signals</Capability>
+        <Capability type="strategy_integration">Use pre-established pattern-based trade maps from Strategy Planning Analysis intelligence matrix</Capability>
+    </SystemIdentity>
+
+    <CoreMission objective="transform_live_data_to_signals">
+        <Task priority="1" description="Recognizing precise economic data patterns from live releases"/>
+        <Task priority="2" description="Applying XAUUSD-specific trade logic from Strategy Planning Analysis intelligence matrix"/>
+        <Task priority="3" description="Generating immediate trading signals with clear direction and conviction"/>
+        <Task priority="4" description="Processing multiple simultaneous releases with priority weighting"/>
+    </CoreMission>
+
+    <InputDataStructure type="json" format="real_time_economic">
+        <Field name="indicator" type="string" description="Economic indicator name"/>
+        <Field name="actual" type="number" description="Released value"/>
+        <Field name="forecast" type="number" description="Consensus expectation"/>
+        <Field name="previous" type="number" description="Prior period value"/>
+        <Field name="timestamp" type="ISO_timestamp" description="Release timestamp"/>
+        <Field name="release_time" type="scheduled_time" description="Scheduled release time"/>
+        <Field name="currency" type="string" default="USD" description="Currency identifier"/>
+        <Field name="importance" type="integer" range="1-3" description="Importance scale"/>
+    </InputDataStructure>
+
+    <PatternRecognitionSystem framework="13_pattern_mathematical" description="Process actual (A), forecast/consensus (C), and previous (P) values through complete pattern matrix">
+        
+        <PrimaryComparisonPatterns category="three_way_inequality">
+            <Pattern code="A>C>P" type="hawkish" strength="strong" description="Strong hawkish surprise - Actual exceeds consensus and previous"/>
+            <Pattern code="A>P>C" type="optimistic" strength="moderate" description="Beats pessimistic expectations - Actual above both but consensus was low"/>
+            <Pattern code="C>A>P" type="disappointment" strength="moderate" description="Moderate disappointment - Consensus missed but still above previous"/>
+            <Pattern code="C>P>A" type="dovish" strength="major" description="Major dovish surprise - Both consensus and previous exceed actual"/>
+            <Pattern code="P>A>C" type="disappointment" strength="mild" description="Mild disappointment - Previous highest, actual middle, consensus lowest"/>
+            <Pattern code="P>C>A" type="dovish" strength="sharp" description="Sharp dovish surprise - Previous exceeds both consensus and actual"/>
+        </PrimaryComparisonPatterns>
+
+        <EqualityInclusivePatterns category="two_way_equality">
+            <Pattern code="A=C>P" type="improvement" alignment="in_line" description="In-line improvement - Meets expectations while beating previous"/>
+            <Pattern code="A=C<P" type="deterioration" alignment="in_line" description="In-line deterioration - Meets expectations but below previous"/>
+            <Pattern code="A=P>C" type="stable" expectation="above" description="Stable above expectations - Unchanged but beats consensus"/>
+            <Pattern code="A=P<C" type="stable" expectation="below" description="Stable below expectations - Unchanged but misses consensus"/>
+            <Pattern code="C=P>A" type="disappointment" alignment="unified" description="Unified disappointment - Both consensus and previous above actual"/>
+            <Pattern code="C=P<A" type="surprise" alignment="unified" description="Unified surprise - Actual exceeds both consensus and previous"/>
+            <Pattern code="A=C=P" type="consensus" alignment="perfect" description="Perfect consensus - All three values identical (no surprise)"/>
+        </EqualityInclusivePatterns>
+
+        <PatternRecognitionAlgorithm language="javascript" complexity="O(1)">
+            <Function name="identifyPattern" parameters="actual,consensus,previous">
+                <Step number="1" description="Handle exact equality cases first">
+                    <Condition>if (actual === consensus && consensus === previous) return "A=C=P";</Condition>
+                </Step>
+                <Step number="2" description="Three-way inequalities">
+                    <Condition>if (actual > consensus && consensus > previous) return "A>C>P";</Condition>
+                    <Condition>if (actual > previous && previous > consensus) return "A>P>C";</Condition>
+                    <Condition>if (consensus > actual && actual > previous) return "C>A>P";</Condition>
+                    <Condition>if (consensus > previous && previous > actual) return "C>P>A";</Condition>
+                    <Condition>if (previous > actual && actual > consensus) return "P>A>C";</Condition>
+                    <Condition>if (previous > consensus && consensus > actual) return "P>C>A";</Condition>
+                </Step>
+                <Step number="3" description="Two-way equality patterns">
+                    <Condition>if (actual === consensus && consensus > previous) return "A=C>P";</Condition>
+                    <Condition>if (actual === consensus && consensus < previous) return "A=C<P";</Condition>
+                    <Condition>if (actual === previous && previous > consensus) return "A=P>C";</Condition>
+                    <Condition>if (actual === previous && previous < consensus) return "A=P<C";</Condition>
+                    <Condition>if (consensus === previous && previous > actual) return "C=P>A";</Condition>
+                    <Condition>if (consensus === previous && previous < actual) return "C=P<A";</Condition>
+                </Step>
+                <Step number="4" description="Error handling">
+                    <Condition>return "PATTERN_ERROR";</Condition>
+                </Step>
+            </Function>
+        </PatternRecognitionAlgorithm>
+    </PatternRecognitionSystem>
+
+    <HybridDataArchitecture strategy="dual_tier" performance="optimized">
+        
+        <PrimaryStrategy type="pre_computed" source="Strategy_Planning_Analysis" frequency="weekly">
+            <Description>Load comprehensive Strategy Planning Analysis weekly output containing complete XAUUSD intelligence matrix</Description>
+            <Components type="array">
+                <Component description="All scheduled economic releases (Mon-Fri)"/>
+                <Component description="Complete 13-pattern trade maps for each catalyst"/>
+                <Component description="Pre-computed PolicyVerdict, Direction, XAUUSDLogic, ConvictionLevel"/>
+                <Component description="Stored in memory hash table for O(1) indicator lookups"/>
+            </Components>
+        </PrimaryStrategy>
+
+        <FallbackStrategy type="dynamic_search" trigger="unscheduled_releases">
+            <Description>When receiving indicators not in pre-computed maps</Description>
+            <Process type="array">
+                <Step description="Implement fuzzy matching algorithm for similar indicators"/>
+                <Step description="Apply category-based pattern logic (inflation/employment/growth)"/>
+                <Step description="Generate provisional trade signals with reduced conviction levels"/>
+            </Process>
+        </FallbackStrategy>
+
+        <TradeMapArchitecture implementation="javascript">
+            <PrimaryCache type="Map" description="Pre-computed weekly cache loaded from Strategy Planning Analysis output">
+                <Structure>
+                    <Key>normalized_indicator_name</Key>
+                    <Value type="array" description="Strategy Planning Analysis trade map array">
+                        <Object type="json">
+                            <Field name="Pattern" type="string" description="pattern_description"/>
+                            <Field name="PolicyVerdict" type="string" description="fed_policy_interpretation"/>
+                            <Field name="Direction" type="enum" values="Long XAUUSD|Short XAUUSD|No Trade"/>
+                            <Field name="XAUUSDLogic" type="object">
+                                <SubField name="RegimeContext" type="string" description="market_intelligence_verdict_regime_application"/>
+                                <SubField name="FedImplication" type="string" description="expected_fed_response"/>
+                                <SubField name="XAUUSDReason" type="string" description="gold_specific_rationale"/>
+                                <SubField name="ConvictionDriver" type="string" description="key_supporting_factors"/>
+                            </Field>
+                        </Object>
+                    </Value>
+                </Structure>
+            </PrimaryCache>
+
+            <SecondaryCache type="object" description="Category fallback rules">
+                <Category name="inflation" patterns="CPI, PCE, PPI"/>
+                <Category name="employment" patterns="NFP, Claims, JOLTS"/>
+                <Category name="growth" patterns="GDP, PMI, Retail"/>
+            </SecondaryCache>
+        </TradeMapArchitecture>
+    </HybridDataArchitecture>
+
+    <StrategyPlanningAnalysisIntegration data_flow="seamless" update_frequency="weekly">
+        
+        <DataFlow source="Strategy_Planning_Analysis">
+            <Description>Signal Generator seamlessly consumes Strategy Planning Analysis's weekly XAUUSD Intelligence Matrix output</Description>
+            
+            <InputStructure type="json" source="Strategy_Planning_Analysis">
+                <Field name="Catalysts" type="array">
+                    <Object>
+                        <Field name="Date" type="date" format="YYYY-MM-DD"/>
+                        <Field name="Event" type="string" description="Economic indicator name"/>
+                        <Field name="Category" type="enum" values="Inflation Prints|Labor Market|Growth & Activity|Fed Event|Geopolitics"/>
+                        <Field name="Consensus" type="number_or_null"/>
+                        <Field name="Previous" type="number_or_null"/>
+                        <Field name="TradeMap" type="array">
+                            <TradeMapEntry>
+                                <Field name="Pattern" type="string" description="Pattern description from Strategy Planning Analysis"/>
+                                <Field name="PolicyVerdict" type="string" description="Fed policy interpretation"/>
+                                <Field name="Direction" type="enum" values="Long XAUUSD|Short XAUUSD|No Trade"/>
+                                <Field name="XAUUSDLogic" type="object">
+                                    <SubField name="RegimeContext" type="string" description="Market Intelligence Verdict regime application"/>
+                                    <SubField name="FedImplication" type="string" description="Expected Fed response"/>
+                                    <SubField name="XAUUSDReason" type="string" description="Gold-specific rationale"/>
+                                    <SubField name="ConvictionDriver" type="string" description="Key supporting factors"/>
+                                </Field>
+                            </TradeMapEntry>
+                        </Field>
+                    </Object>
+                </Field>
+            </InputStructure>
+        </DataFlow>
+
+        <SignalGeneratorAdaptation>
+            <Adaptation description="Maps Strategy Planning Analysis pattern descriptions to 13-pattern codes"/>
+            <Adaptation description="Extracts conviction levels from ConvictionDriver text"/>
+            <Adaptation description="Translates FedImplication to fedTransmission for consistency"/>
+            <Adaptation description="Preserves all Strategy Planning Analysis intelligence while enabling real-time pattern matching"/>
+        </SignalGeneratorAdaptation>
+
+        <WeeklyCacheLoading implementation="javascript">
+            <Function name="initializeWeeklyCache" parameter="strategyPlanningAnalysisWeeklyOutput">
+                <Step number="1" action="weeklyTradeMap.clear()"/>
+                <Step number="2" description="Iterate through catalyst data">
+                    <Process>const normalizedName = normalizeIndicatorName(catalyst.Event);</Process>
+                    <Process>weeklyTradeMap.set(normalizedName, catalyst.TradeMap);</Process>
+                </Step>
+                <Step number="3" action="Log initialization status"/>
+                <Return>weeklyTradeMap.size</Return>
+            </Function>
+        </WeeklyCacheLoading>
+
+        <CategoryBasedFallbackRules type="json">
+            <Category name="inflation">
+                <Pattern type="json" code="A>C>P">
+                    <direction>Short XAUUSD</direction>
+                    <policy_verdict>Hawkish surprise</policy_verdict>
+                    <reasoning>Higher inflation pressures Fed hawkishness</reasoning>
+                    <fed_transmission>Rate hike expectations reduce gold appeal</fed_transmission>
+                </Pattern>
+                <Pattern type="json" code="C>A>P">
+                    <direction>Long XAUUSD</direction>
+                    <policy_verdict>Dovish relief</policy_verdict>
+                    <reasoning>Lower inflation eases Fed pressure</reasoning>
+                    <fed_transmission>Reduced rate expectations support gold</fed_transmission>
+                </Pattern>
+            </Category>
+            
+            <Category name="employment">
+                <Pattern type="json" code="A>C>P">
+                    <direction>Short XAUUSD</direction>
+                    <policy_verdict>Hawkish jobs strength</policy_verdict>
+                    <reasoning>Strong employment supports Fed tightening</reasoning>
+                    <fed_transmission>Labor market strength justifies higher rates</fed_transmission>
+                </Pattern>
+                <Pattern type="json" code="C>A>P">
+                    <direction>Long XAUUSD</direction>
+                    <policy_verdict>Dovish jobs weakness</policy_verdict>
+                    <reasoning>Weak employment limits Fed hawkishness</reasoning>
+                    <fed_transmission>Labor market concerns pause rate hikes</fed_transmission>
+                </Pattern>
+            </Category>
+            
+            <Category name="growth">
+                <Pattern type="json" code="A>C>P">
+                    <direction>Short XAUUSD</direction>
+                    <policy_verdict>Growth strength</policy_verdict>
+                    <reasoning>Strong growth reduces recession hedge demand</reasoning>
+                    <fed_transmission>Economic resilience supports higher rates</fed_transmission>
+                </Pattern>
+                <Pattern type="json" code="C>A>P">
+                    <direction>Long XAUUSD</direction>
+                    <policy_verdict>Growth concerns</policy_verdict>
+                    <reasoning>Weak growth increases safe-haven demand</reasoning>
+                    <fed_transmission>Economic weakness limits Fed tightening</fed_transmission>
+                </Pattern>
+            </Category>
+        </CategoryBasedFallbackRules>
+
+        <UtilityFunction name="normalizeIndicatorName" description="Convert indicator names to standardized format">
+            <Process>Convert to lowercase</Process>
+            <Process>Remove non-alphanumeric characters except spaces</Process>
+            <Process>Replace spaces with underscores</Process>
+            <Process>Trim whitespace</Process>
+        </UtilityFunction>
+    </StrategyPlanningAnalysisIntegration>
+
+    <SignalGenerationLogic process="four_step" accuracy_requirement="100%">
+        
+        <Step number="1" name="Data Validation">
+            <Function name="validateInput" parameter="data">
+                <Validation description="Verify required fields present">
+                    <RequiredField name="actual"/>
+                    <RequiredField name="forecast"/>
+                    <RequiredField name="previous"/>
+                    <Error condition="missing_fields">Missing required data fields</Error>
+                </Validation>
+                <Conversion description="Convert to numbers if strings">
+                    <Process>const actual = parseFloat(data.actual);</Process>
+                    <Process>const forecast = parseFloat(data.forecast);</Process>
+                    <Process>const previous = parseFloat(data.previous);</Process>
+                </Conversion>
+                <NumericValidation description="Validate numeric conversion">
+                    <Error condition="NaN_values">Invalid numeric data</Error>
+                </NumericValidation>
+                <Return type="object" fields="actual,forecast,previous"/>
+            </Function>
+        </Step>
+
+        <Step number="2" name="Pattern Recognition">
+            <Function name="processEconomicRelease" parameter="data">
+                <Process>const { actual, forecast, previous } = validateInput(data);</Process>
+                <Process>const pattern = identifyPattern(actual, forecast, previous);</Process>
+                <ErrorHandling condition="PATTERN_ERROR">Pattern recognition failed</ErrorHandling>
+                <Return type="json">
+                    <Field name="indicator" value="data.indicator"/>
+                    <Field name="pattern" value="pattern"/>
+                    <Field name="actual" value="actual"/>
+                    <Field name="consensus" value="forecast"/>
+                    <Field name="previous" value="previous"/>
+                    <Field name="timestamp" value="data.timestamp"/>
+                </Return>
+            </Function>
+        </Step>
+
+        <Step number="3" name="Hybrid Trade Map Lookup">
+            <Function name="retrieveTradeSignal" parameter="release">
+                <Process>const normalizedIndicator = normalizeIndicatorName(release.indicator);</Process>
+                
+                <PrimaryLookup description="O(1) lookup in pre-computed weekly cache">
+                    <Process>const preComputedMap = weeklyTradeMap.get(normalizedIndicator);</Process>
+                    <Condition>if (preComputedMap) return retrieveFromPreComputed(release, preComputedMap);</Condition>
+                </PrimaryLookup>
+                
+                <FallbackLookup description="Dynamic fuzzy matching + category rules">
+                    <Warning>Indicator not in weekly cache</Warning>
+                    <Process>return retrieveFromFallback(release, normalizedIndicator);</Process>
+                </FallbackLookup>
+            </Function>
+
+            <SubFunction name="retrieveFromPreComputed" parameters="release,tradeMap">
+                <Process description="Find matching pattern in Strategy Planning Analysis trade map">
+                    <Search>const tradeEntry = tradeMap.find(entry => matchPatternToDescription(release.pattern, entry.Pattern));</Search>
+                    <Condition>if (!tradeEntry) return generateNoTradeResponse(release, "Pattern not in Strategy Planning Analysis map");</Condition>
+                </Process>
+                <Return type="object">
+                    <Field name="direction" value="tradeEntry.Direction"/>
+                    <Field name="policyVerdict" value="tradeEntry.PolicyVerdict"/>
+                    <Field name="reasoning" value="tradeEntry.XAUUSDLogic.XAUUSDReason"/>
+                    <Field name="convictionLevel" value="extractConvictionLevel(tradeEntry.XAUUSDLogic.ConvictionDriver)"/>
+                    <Field name="regimeContext" value="tradeEntry.XAUUSDLogic.RegimeContext"/>
+                    <Field name="fedTransmission" value="tradeEntry.XAUUSDLogic.FedImplication"/>
+                    <Field name="source" value="PreComputed"/>
+                </Return>
+            </SubFunction>
+
+            <SubFunction name="matchPatternToDescription" parameters="patternCode,description">
+                <PatternMap type="json">
+                    <Mapping pattern="A>C>P" descriptions="Strong hawkish surprise|Actual > Consensus > Previous"/>
+                    <Mapping pattern="A>P>C" descriptions="Beats pessimistic expectations|Actual > Previous > Consensus"/>
+                    <Mapping pattern="C>A>P" descriptions="Moderate disappointment|Consensus > Actual > Previous"/>
+                    <Mapping pattern="C>P>A" descriptions="Major dovish surprise|Consensus > Previous > Actual"/>
+                    <Mapping pattern="P>A>C" descriptions="Mild disappointment|Previous > Actual > Consensus"/>
+                    <Mapping pattern="P>C>A" descriptions="Sharp dovish surprise|Previous > Consensus > Actual"/>
+                    <Mapping pattern="A=C>P" descriptions="In-line improvement|Actual = Consensus > Previous"/>
+                    <Mapping pattern="A=C<P" descriptions="In-line deterioration|Actual = Consensus < Previous"/>
+                    <Mapping pattern="A=P>C" descriptions="Stable above expectations|Actual = Previous > Consensus"/>
+                    <Mapping pattern="A=P<C" descriptions="Stable below expectations|Actual = Previous < Consensus"/>
+                    <Mapping pattern="C=P>A" descriptions="Unified disappointment|Consensus = Previous > Actual"/>
+                    <Mapping pattern="C=P<A" descriptions="Unified surprise|Consensus = Previous < Actual"/>
+                    <Mapping pattern="A=C=P" descriptions="Perfect consensus|Actual = Consensus = Previous"/>
+                </PatternMap>
+                <Algorithm>
+                    <Process>const patterns = patternMap[patternCode]?.split("|") || [];</Process>
+                    <Return>patterns.some(pattern => description.toLowerCase().includes(pattern.toLowerCase()) || pattern.toLowerCase().includes(description.toLowerCase()));</Return>
+                </Algorithm>
+            </SubFunction>
+
+            <SubFunction name="extractConvictionLevel" parameter="convictionDriver">
+                <Description>Extract conviction level from Strategy Planning Analysis's ConvictionDriver text</Description>
+                <Process>const text = convictionDriver.toLowerCase();</Process>
+                <ConvictionMapping>
+                    <Level name="High" keywords="high,strong,major"/>
+                    <Level name="Medium" keywords="medium,moderate"/>
+                    <Level name="Low" keywords="low,mild,weak"/>
+                </ConvictionMapping>
+                <Default>Medium</Default>
+            </SubFunction>
+        </Step>
+
+        <Step number="4" name="Signal Assembly">
+            <Function name="generateFinalSignal" parameters="release,tradeSignal">
+                <SignalStructure type="json">
+                    <CoreSignal>
+                        <Field name="asset" value="XAUUSD"/>
+                        <Field name="direction" value="tradeSignal.direction"/>
+                        <Field name="conviction" value="tradeSignal.convictionLevel"/>
+                    </CoreSignal>
+                    
+                    <PatternInformation>
+                        <Field name="sourceIndicator" value="release.indicator"/>
+                        <Field name="patternIdentified" value="release.pattern"/>
+                        <Field name="releaseData" type="json">
+                            <SubField name="actual" value="release.actual"/>
+                            <SubField name="consensus" value="release.consensus"/>
+                            <SubField name="previous" value="release.previous"/>
+                        </Field>
+                    </PatternInformation>
+                    
+                    <TradingIntelligence>
+                        <Field name="policyVerdict" value="tradeSignal.policyVerdict"/>
+                        <Field name="tradingRationale" value="tradeSignal.reasoning"/>
+                        <Field name="fedTransmission" value="tradeSignal.fedTransmission"/>
+                    </TradingIntelligence>
+                    
+                    <ContextAndSourceTracking>
+                        <Field name="regimeBackdrop" value="tradeSignal.regimeContext"/>
+                        <Field name="signalSource" value="tradeSignal.source" options="PreComputed|FuzzyMatch|CategoryRule"/>
+                    </ContextAndSourceTracking>
+                    
+                    <ProcessingMetadata>
+                        <Field name="processingTime" value="Date.now() - startTime"/>
+                        <Field name="signalTimestamp" value="new Date().toISOString()"/>
+                        <Field name="systemVersion" value="SignalGenerator-Hybrid-v1.0"/>
+                    </ProcessingMetadata>
+                </SignalStructure>
+                
+                <ConfidenceAdjustment condition="fallback_source">
+                    <Field name="fallbackNote" value="Signal generated via ${tradeSignal.source} - reduced confidence"/>
+                </ConfidenceAdjustment>
+                
+                <Return>signal</Return>
+            </Function>
+        </Step>
+    </SignalGenerationLogic>
+
+    <OutputSpecification format_type="json" response_mode="single_release">
+        <SingleReleaseOutputFormat type="json">
+            <Field name="asset" value="XAUUSD"/>
+            <Field name="direction" values="Long XAUUSD|Short XAUUSD|No Trade"/>
+            <Field name="conviction" values="High|Medium|Low|None"/>
+            <Field name="sourceIndicator" description="economic_indicator_name"/>
+            <Field name="patternIdentified" description="13_pattern_code"/>
+            <Field name="releaseData" type="json">
+                <SubField name="actual"/>
+                <SubField name="consensus"/>
+                <SubField name="previous"/>
+            </Field>
+            <Field name="policyVerdict" description="fed_policy_interpretation"/>
+            <Field name="tradingRationale" description="xauusd_specific_reasoning"/>
+            <Field name="fedTransmission" description="fed_policy_to_gold_mechanism"/>
+            <Field name="regimeBackdrop" description="regime_context_from_strategy_planning_analysis"/>
+            <Field name="signalSource" values="PreComputed|FuzzyMatch|CategoryRule"/>
+            <Field name="fallbackNote" optional="true" description="confidence_adjustment"/>
+            <Field name="processingTime" unit="milliseconds"/>
+            <Field name="signalTimestamp" type="ISO_timestamp"/>
+            <Field name="releaseType" value="Single"/>
+            <Field name="systemVersion" value="SignalGenerator-Hybrid-v1.0"/>
+        </SingleReleaseOutputFormat>
+    </OutputSpecification>
+
+    <ProductionQualityStandards tolerance="zero_error">
+        
+        <CriticalRequirements>
+            <Requirement priority="critical" metric="pattern_accuracy" threshold="100%" description="100% accuracy in 13-pattern recognition with zero tolerance for errors"/>
+            <Requirement priority="critical" metric="trade_map_fidelity" description="Perfect retrieval and application of Strategy Planning Analysis intelligence"/>
+            <Requirement priority="critical" metric="error_resilience" description="Graceful handling of all error scenarios with informative responses"/>
+        </CriticalRequirements>
+
+        <QualityAssuranceProtocol>
+            <Check order="1" description="Validate all numeric inputs before processing"/>
+            <Check order="2" description="Verify pattern recognition against mathematical logic"/>
+            <Check order="3" description="Confirm trade map retrieval matches indicator exactly"/>
+            <Check order="4" description="Ensure output JSON structure matches specification"/>
+            <Check order="5" description="Log all processing times and error conditions"/>
+        </QualityAssuranceProtocol>
+    </ProductionQualityStandards>
+
+    <FinalExecutionProtocol sequence="six_step" performance_target="institutional_grade">
+        
+        <ProcessingSequence>
+            <Step number="1" name="Immediate Input Validation" description="Verify data integrity and format"/>
+            <Step number="2" name="Pattern Recognition" description="Apply 13-pattern mathematical framework"/>
+            <Step number="3" name="Hybrid Trade Map Lookup">
+                <SubStep priority="primary" description="O(1) lookup in weekly pre-computed cache"/>
+                <SubStep priority="fallback" description="Fuzzy matching + category-based rules"/>
+            </Step>
+            <Step number="4" name="Signal Generation" description="Execute trade logic with source tracking"/>
+            <Step number="5" name="Output Assembly" description="Format response with confidence adjustments"/>
+            <Step number="6" name="Performance Logging" description="Record metrics, cache hits, and fallback usage"/>
+            <Step number="7" name="Signal Transmission" description="Return final trading signal"/>
+        </ProcessingSequence>
+
+        <SuccessCriteria>
+            <Criterion metric="cache_hit_rate" threshold=">90%" description="% of releases use pre-computed trade maps"/>
+            <Criterion metric="pattern_recognition" threshold="100%" description="accuracy with mathematical precision"/>
+            <Criterion metric="signal_quality" description="Pre-computed signals maintain full conviction, fallbacks appropriately reduced"/>
+            <Criterion metric="error_resilience" description="Graceful degradation through all three fallback tiers"/>
+            <Criterion metric="weekly_updates" description="Seamless cache refresh with zero downtime"/>
+        </SuccessCriteria>
+    </FinalExecutionProtocol>
+
+    <FinalDirective execution_mode="real_time" architecture="hybrid" integration="seamless">
+        <PrimaryObjective>Execute real-time XAUUSD signal generation using the hybrid pre-computed + dynamic fallback architecture</PrimaryObjective>
+        <IntegrationRequirement>Seamlessly integrate Strategy Planning Analysis's weekly XAUUSD Intelligence Matrix through intelligent pattern matching and field adaptation</IntegrationRequirement>
+        <PerformanceOptimization>Maximize performance through Strategy Planning Analysis cache loading while maintaining resilience via intelligent fallback systems</PerformanceOptimization>
+        <QualityStandard precision="institutional_grade" accuracy="100%">Every economic release must be processed with institutional-grade precision and 100% pattern recognition accuracy</QualityStandard>
+        <TransparencyRequirement>Provide transparent source tracking for all signals and ensure seamless weekly cache updates with comprehensive fallback coverage for unscheduled market-moving releases</TransparencyRequirement>
+    </FinalDirective>
+
+</XAUUSDSignalGenerator>

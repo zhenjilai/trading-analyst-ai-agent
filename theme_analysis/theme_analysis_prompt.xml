@@ -1,0 +1,826 @@
+<MarketThemeDiscovery>
+  <CoreObjective>Find positive and negative market themes across full GICS hierarchy using professional and institutional reports sources for the stipulated dates.</CoreObjective>
+  
+  <InformationSources>
+    <ProfessionalNewsSources weight="70%" type="primary">
+      <Source name="Bloomberg"/>
+      <Source name="Reuters News"/>
+      <Source name="Dow Jones Newswires"/>
+      <Source name="Financial Times"/>
+      <Source name="Wall Street Journal"/>
+      <Source name="MarketWatch"/>
+      <Source name="CNBC"/>
+      <Source name="Barron's"/>
+    </ProfessionalNewsSources>
+    
+    <InstitutionalReportsSources weight="30%" type="secondary">
+      <Source provider="JP Morgan Asset Management" content="Weekly market recap and insights"/>
+      <Source provider="Goldman Sachs Research" content="Top of Mind weekly analysis"/>
+      <Source provider="Morgan Stanley Research" content="Weekly market outlook and sector analysis"/>
+      <Source provider="BlackRock Investment Institute" content="Weekly market commentary"/>
+      <Source provider="Bank of America Global Research" content="Weekly market recap reports"/>
+      <Source provider="T. Rowe Price Insights" content="Market analysis and strategic outlook"/>
+      <Source provider="BNP Paribas Asset Management" content="Front of Mind weekly research"/>
+      <Source provider="LPL Financial Research" content="Weekly market commentary"/>
+      <Source provider="Morningstar Research" content="Stock market trends and analysis"/>
+      <Source provider="Vanda Research" content="Weekly research powered by proprietary data"/>
+      <Source provider="Seeking Alpha" content="Professional contributor analysis"/>
+      <Source provider="Zacks Research" content="Earnings estimate trends and revisions"/>
+      <Source provider="Argus Research" content="Weekly investment lists and market reports"/>
+      <Source provider="TipRanks" content="Analyst performance tracking and research"/>
+    </InstitutionalReportsSources>
+  </InformationSources>
+  
+  <GICSHierarchyAnalysis precision="technology-level">
+    <DynamicThemeDetectionFramework reference="Global Industry Classification Standard" url="https://en.wikipedia.org/wiki/Global_Industry_Classification_Standard">
+      <ThemeDetectionScope>
+        <Sectors count="11">
+          <Sector>Energy</Sector>
+          <Sector>Materials</Sector>
+          <Sector>Industrials</Sector>
+          <Sector>Consumer Discretionary</Sector>
+          <Sector>Consumer Staples</Sector>
+          <Sector>Health Care</Sector>
+          <Sector>Financials</Sector>
+          <Sector>Information Technology</Sector>
+          <Sector>Communication Services</Sector>
+          <Sector>Utilities</Sector>
+          <Sector>Real Estate</Sector>
+        </Sectors>
+        
+        <IndustryGroups count="25" detection="automatic" basis="market activity"/>
+        <Industries count="74" analysis="sub-industry theme identification"/>
+        <SubIndustries count="163" analysis="granular theme analysis" precision="technology"/>
+      </ThemeDetectionScope>
+      
+      <SubIndustryTechnologyPrecisionRequirements description="When detecting themes across any sector, drill down to specific sub-technologies and products (examples applicable to all GICS sectors)">
+        <PrecisionRule>
+          <Instead>Utilities AI demand</Instead>
+          <Use>Nuclear power plant capacity expansion for AI data centers</Use>
+        </PrecisionRule>
+        <PrecisionRule>
+          <Instead>AI chips</Instead>
+          <Use>NVIDIA H100/H200 GPU demand for AI data centers</Use>
+        </PrecisionRule>
+        <PrecisionRule>
+          <Instead>Cloud services</Instead>
+          <Use>AWS EC2 P5 instances for AI workloads</Use>
+        </PrecisionRule>
+        <PrecisionRule>
+          <Instead>Biotech advances</Instead>
+          <Use>GLP-1 receptor agonists for obesity treatment</Use>
+        </PrecisionRule>
+        <PrecisionRule>
+          <Instead>EV adoption</Instead>
+          <Use>Tesla 4680 battery cell production scaling</Use>
+        </PrecisionRule>
+        <PrecisionRule>
+          <Instead>Software growth</Instead>
+          <Use>Microsoft 365 Copilot enterprise integration</Use>
+        </PrecisionRule>
+      </SubIndustryTechnologyPrecisionRequirements>
+    </DynamicThemeDetectionFramework>
+    
+    <CrossGICSConnections precision="technology-level">
+      <MultiSectorThemePatterns focus="specific technology identification">
+        <Pattern>Themes affecting multiple GICS sectors with precise technology identification</Pattern>
+        <Pattern>Cross-industry supply chain relationships at component/product level</Pattern>
+        <Pattern>Regulatory changes impacting specific technologies/products across sectors</Pattern>
+        <Pattern>Technology adoption patterns across traditional industries</Pattern>
+        <Pattern>Economic cycles affecting specific sub-industry positioning</Pattern>
+      </MultiSectorThemePatterns>
+    </CrossGICSConnections>
+  </GICSHierarchyAnalysis>
+  
+  <ThemeMomentumAndTimingPatterns>
+    <TemporalClassification>
+      <BrandNewThemes period="0-4 weeks">
+        <ThemeType>New technology breakthroughs</ThemeType>
+        <ThemeType>Earnings surprises</ThemeType>
+        <ThemeType>Leadership changes</ThemeType>
+        <ThemeType>Competitive developments</ThemeType>
+        <ThemeType>Product launches</ThemeType>
+      </BrandNewThemes>
+      
+      <GrowingThemes period="1-3 months">
+        <ThemeType>Market adoption trends</ThemeType>
+        <ThemeType>Expert prediction changes</ThemeType>
+        <ThemeType>Sector rotation patterns</ThemeType>
+        <ThemeType>Consumer behavior shifts</ThemeType>
+      </GrowingThemes>
+      
+      <EstablishedThemes period="3-12 months">
+        <ThemeType>Industry transformation</ThemeType>
+        <ThemeType>Technology adoption curves</ThemeType>
+        <ThemeType>Demographic shifts</ThemeType>
+        <ThemeType>Economic cycle themes</ThemeType>
+      </EstablishedThemes>
+      
+      <FadingThemes>
+        <ThemeType>Failed initiatives</ThemeType>
+        <ThemeType>Competitive losses</ThemeType>
+        <ThemeType>Technology becoming outdated</ThemeType>
+        <ThemeType>Market saturation</ThemeType>
+      </FadingThemes>
+    </TemporalClassification>
+  </ThemeMomentumAndTimingPatterns>
+  
+  <AnalysisMethodology>
+    <ProfessionalNewsVsInstitutionalReportsValidation>
+      <CodeImplementation language="python">
+def compare_professional_sources():
+    theme_score = {
+        "news_sentiment": analyze_financial_news() * 0.7,
+        "institutional_reports": analyze_expert_research() * 0.3
+    }
+    
+    # Look for alignment between news and institutional reports
+    consensus_strength = calculate_agreement(news_sentiment, institutional_reports)
+    
+    return theme_score, consensus_strength
+      </CodeImplementation>
+    </ProfessionalNewsVsInstitutionalReportsValidation>
+    
+    <ThemeDirectionClassification>
+      <CodeImplementation language="python">
+def determine_theme_direction():
+    for theme in detected_themes:
+        positive_signals = count_good_indicators(theme)
+        negative_signals = count_bad_indicators(theme)
+        
+        # Normalized to -100 to +100 scale
+        overall_score = ((positive_signals - negative_signals) / (positive_signals + negative_signals)) * 100
+        
+        if overall_score > 22.5:
+            theme_direction = "positive"
+        elif overall_score < -22.5:
+            theme_direction = "negative" 
+        else:
+            theme_direction = "neutral"
+            
+        return theme_direction, overall_score
+      </CodeImplementation>
+      
+      <ScoringScale range="-100 to +100" threshold_positive="22.5" threshold_negative="-22.5"/>
+    </ThemeDirectionClassification>
+  </AnalysisMethodology>
+  
+  <WeeklyProcess>
+    <Step number="1">
+      <Title>Professional News Intelligence Scan</Title>
+      <Process>
+        <Action>Aggregate financial news themes by industry category</Action>
+        <Action>Analyze news sentiment across major financial publications</Action>
+        <Action>Identify emerging themes and trend momentum</Action>
+      </Process>
+    </Step>
+    
+    <Step number="2">
+      <Title>Institutional Reports Review</Title>
+      <Process>
+        <Action>Review weekly research reports from major institutions</Action>
+        <Action>Analyze expert consensus and divergence signals</Action>
+        <Action>Cross-reference analyst themes with news trends</Action>
+      </Process>
+    </Step>
+    
+    <Step number="3">
+      <Title>Theme Direction Classification</Title>
+      <Process>
+        <Action>Label themes as positive/negative/neutral using -100 to +100 scale</Action>
+        <Action>Map themes to industry categories</Action>
+        <Action>Find cross-industry system-wide themes</Action>
+      </Process>
+    </Step>
+  </WeeklyProcess>
+  
+  <WebSourcesImplementation type="json">
+    <ProfessionalNewsSources type="json">
+      <FinancialNews type="array">
+        <Source url="https://www.bloomberg.com/markets"/>
+        <Source url="https://www.reuters.com/business/finance"/>
+        <Source url="https://www.wsj.com/news/markets"/>
+        <Source url="https://www.ft.com/markets"/>
+        <Source url="https://www.marketwatch.com/investing"/>
+        <Source url="https://www.cnbc.com/markets"/>
+        <Source url="https://www.barrons.com/market-data"/>
+        <Source url="https://apnews.com/business"/>
+      </FinancialNews>
+      
+      <BusinessNews type="array">
+        <Source url="https://finance.yahoo.com/news"/>
+        <Source url="https://www.investopedia.com/news"/>
+        <Source url="https://seekingalpha.com/news"/>
+        <Source url="https://www.fool.com/investing/news"/>
+      </BusinessNews>
+    </ProfessionalNewsSources>
+    
+    <InstitutionalReportsSources type="json">
+      <InstitutionalResearch type="array">
+        <Source url="https://am.jpmorgan.com/us/en/asset-management/adv/insights/market-insights/market-updates/weekly-market-recap"/>
+        <Source url="https://www.goldmansachs.com/insights/goldman-sachs-research"/>
+        <Source url="https://www.morganstanley.com/what-we-do/research"/>
+        <Source url="https://www.blackrock.com/us/individual/insights/blackrock-investment-institute/weekly-commentary"/>
+        <Source url="https://business.bofa.com/en-us/content/market-strategies-insights/weekly-market-recap-report.html"/>
+        <Source url="https://www.troweprice.com/personal-investing/resources/insights/index.html"/>
+        <Source url="https://www.bnpparibas-am.com/en-my/institutional/insights/category/front-of-mind"/>
+        <Source url="https://www.lpl.com/research/weekly-market-commentary.html"/>
+        <Source url="https://www.morningstar.com/topics/stock-market-trends"/>
+        <Source url="https://www.vandaresearch.com"/>
+      </InstitutionalResearch>
+      
+      <ResearchPlatforms type="array">
+        <Source url="https://www.tipranks.com"/>
+        <Source url="https://seekingalpha.com/research"/>
+        <Source url="https://www.zacks.com/research"/>
+        <Source url="https://www.argusresearch.com"/>
+      </ResearchPlatforms>
+    </InstitutionalReportsSources>
+    
+    <MarketDataSources type="json">
+      <StockMarkets type="array">
+        <Source url="https://finance.yahoo.com"/>
+        <Source url="https://www.marketwatch.com"/>
+        <Source url="https://www.investing.com"/>
+        <Source url="https://finviz.com"/>
+      </StockMarkets>
+      
+      <EconomicData type="array">
+        <Source url="https://fred.stlouisfed.org"/>
+        <Source url="https://www.bls.gov"/>
+        <Source url="https://www.census.gov/economic-indicators"/>
+        <Source url="https://www.treasury.gov/resource-center/data-chart-center"/>
+      </EconomicData>
+    </MarketDataSources>
+    
+    <CryptoDataSources type="json">
+      <CryptoMarkets type="array">
+        <Source url="https://www.coingecko.com"/>
+        <Source url="https://coinmarketcap.com"/>
+        <Source url="https://defillama.com"/>
+        <Source url="https://www.coindesk.com/markets"/>
+      </CryptoMarkets>
+      
+      <CryptoNews type="array">
+        <Source url="https://www.coindesk.com"/>
+        <Source url="https://cointelegraph.com"/>
+        <Source url="https://decrypt.co"/>
+        <Source url="https://www.theblock.co"/>
+      </CryptoNews>
+    </CryptoDataSources>
+    
+    <CorporateIntelligence type="array">
+      <Source url="https://www.sec.gov/edgar"/>
+      <Source url="https://investor.sec.gov"/>
+      <Source url="https://www.sec.gov/data-research/sec-markets-data"/>
+      <Source url="https://pitchbook.com/news/reports"/>
+    </CorporateIntelligence>
+  </WebSourcesImplementation>
+  
+  <FrameworkStructures>
+    <PositiveThemeCategories type="json">
+      <GrowthOpportunities type="json" description="Themes about US corporate expansion, innovation, and new opportunities">
+        <Examples type="array">
+          <Example>AI adoption</Example>
+          <Example>Digital transformation</Example>
+          <Example>Medical breakthroughs</Example>
+          <Example>Productivity gains</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Expert upgrades</Source>
+          <Source>Positive earnings forecasts</Source>
+          <Source>Investment announcements</Source>
+          <Source>News coverage</Source>
+        </Sources>
+      </GrowthOpportunities>
+      
+      <GameChangingInnovation type="json" description="Themes about new technologies or business models">
+        <Examples type="array">
+          <Example>Quantum computing</Example>
+          <Example>Gene therapy</Example>
+          <Example>Autonomous systems</Example>
+          <Example>Advanced manufacturing</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Technology breakthroughs</Source>
+          <Source>Patent activity</Source>
+          <Source>R&D investments</Source>
+          <Source>Research developments</Source>
+        </Sources>
+      </GameChangingInnovation>
+      
+      <MarketExpansion type="json" description="Themes about market growth or new market creation">
+        <Examples type="array">
+          <Example>New product categories</Example>
+          <Example>Geographic expansion</Example>
+          <Example>Market share gains</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Market research</Source>
+          <Source>Expansion announcements</Source>
+          <Source>Revenue growth</Source>
+        </Sources>
+      </MarketExpansion>
+      
+      <EfficiencyGains type="json" description="Themes about cost reduction or operational improvements">
+        <Examples type="array">
+          <Example>Automation</Example>
+          <Example>Supply chain optimization</Example>
+          <Example>Energy efficiency</Example>
+          <Example>Process innovation</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Operational improvements</Source>
+          <Source>Cost guidance</Source>
+          <Source>Efficiency announcements</Source>
+        </Sources>
+      </EfficiencyGains>
+    </PositiveThemeCategories>
+    
+    <NegativeThemeCategories type="json">
+      <DisruptionThreats description="Themes about competitive or technological threats">
+        <Examples type="array">
+          <Example>Traditional retail vs online shopping</Example>
+          <Example>Legacy systems vs new technology</Example>
+          <Example>Market share erosion</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Market share loss</Source>
+          <Source>Competitive pressure</Source>
+          <Source>Technology replacement</Source>
+        </Sources>
+      </DisruptionThreats>
+      
+      <RegulatoryRisks description="Themes about government or regulatory headwinds">
+        <Examples type="array">
+          <Example>Antitrust concerns</Example>
+          <Example>Environmental regulations</Example>
+          <Example>Data privacy laws</Example>
+          <Example>Compliance costs</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Regulatory announcements</Source>
+          <Source>Policy discussions</Source>
+          <Source>Compliance costs</Source>
+        </Sources>
+      </RegulatoryRisks>
+      
+      <CyclicalDownturns description="Themes about sector or industry downturns">
+        <Examples type="array">
+          <Example>Demand cycles</Example>
+          <Example>Seasonal weakness</Example>
+          <Example>Consumer spending shifts</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Economic cycles</Source>
+          <Source>Demand patterns</Source>
+          <Source>Industry reports</Source>
+        </Sources>
+      </CyclicalDownturns>
+      
+      <OperationalChallenges description="Themes about execution or operational difficulties">
+        <Examples type="array">
+          <Example>Labor shortages</Example>
+          <Example>Raw material costs</Example>
+          <Example>Quality issues</Example>
+          <Example>Supply problems</Example>
+        </Examples>
+        <Sources type="array">
+          <Source>Management commentary</Source>
+          <Source>Cost pressures</Source>
+          <Source>Operational metrics</Source>
+        </Sources>
+      </OperationalChallenges>
+    </NegativeThemeCategories>
+    
+    <CryptocurrencyThemes detection="dynamic" market_cap="top 10 large-cap">
+      <TopLargeCap type="array">
+        <Crypto>Bitcoin</Crypto>
+        <Crypto>Ethereum</Crypto>
+        <Crypto>BNB</Crypto>
+        <Crypto>Solana</Crypto>
+        <Crypto>XRP</Crypto>
+        <Crypto>Cardano</Crypto>
+        <Crypto>Avalanche</Crypto>
+        <Crypto>Polygon</Crypto>
+        <Crypto>TRON</Crypto>
+        <Crypto>Dogecoin</Crypto>
+      </TopLargeCap>
+      
+      <DynamicThemeDetection>
+        <PositiveThemes>
+          <AnyCryptoThemes detection="dynamic">Dynamically detected positive themes</AnyCryptoThemes>
+          <CrossCryptoThemes type="array">
+            <Theme>Institutional adoption</Theme>
+            <Theme>Regulatory clarity</Theme>
+            <Theme>Technical improvements</Theme>
+            <Theme>Real-world utility</Theme>
+          </CrossCryptoThemes>
+        </PositiveThemes>
+        
+        <NegativeThemes>
+          <AnyCryptoThemes detection="dynamic">Dynamically detected negative themes</AnyCryptoThemes>
+          <CrossCryptoThemes type="array">
+            <Theme>Regulatory crackdowns</Theme>
+            <Theme>Market manipulation concerns</Theme>
+            <Theme>Technical vulnerabilities</Theme>
+            <Theme>Adoption barriers</Theme>
+          </CrossCryptoThemes>
+        </NegativeThemes>
+      </DynamicThemeDetection>
+    </CryptocurrencyThemes>
+  </FrameworkStructures>
+  
+  <WeeklyThemeIntelligenceReport type="json" template="true">
+    <WeekOf>2025-08-12</WeekOf>
+    
+    <Methodology>
+      <PrimaryApproach>AI topic modeling with financial language understanding for US corporate theme detection</PrimaryApproach>
+      <ValidationMethod>AI classifiers with positive/negative detection on -100 to +100 scale</ValidationMethod>
+      <InformationSources>Professional News (70%) + Institutional Reports (30%)</InformationSources>
+      <AttentionSystem>AI attention mechanisms + theme direction classification</AttentionSystem>
+      <ScoringFramework range="-100 to +100" positive_threshold="22.5" negative_threshold="-22.5">Normalized -100 to +100 scale with ±22.5 trading thresholds</ScoringFramework>
+      <FocusArea>US corporate themes only - excluding fiscal and monetary policy</FocusArea>
+    </Methodology>
+    
+    <ThemeAnalysis type="array of json">
+      <Category name="US Industry Analysis">
+        <DominantThemes type="array of json">
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Technology/Product-Level Theme 1]</ThemeName>
+            <Example>NVIDIA H100/H200 GPU supply constraints for AI data center workloads</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: H100/H200 GPU architecture, CUDA compute capability, HBM3 memory</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Specific product/technology announcements, earnings impacts, market positioning</Signal>
+              <Signal source="Professional News">Supply chain specifics, pricing dynamics, market share data</Signal>
+              <Signal source="Professional News">Regulatory developments, competitive landscape changes</Signal>
+              <Signal source="Institutional Reports">Developer communities, user adoption patterns, technical performance discussions</Signal>
+              <Signal source="Institutional Reports">Industry professional forums discussing implementation challenges/successes</Signal>
+            </KeySignals>
+            <ConsensusLevel calculation="real-time">[Real-time consensus analysis]</ConsensusLevel>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Technology/Product-Level Theme 2]</ThemeName>
+            <Example>GLP-1 receptor agonists market expansion and insurance coverage dynamics</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: GLP-1 receptor agonist mechanism, tirzepatide dual agonist, semaglutide formulation</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Clinical trial results, FDA approvals, pricing announcements, insurance coverage decisions</Signal>
+              <Signal source="Professional News">Market access strategies, label expansions, manufacturing capacity</Signal>
+              <Signal source="Professional News">Competitive landscape analysis, market penetration data</Signal>
+              <Signal source="Institutional Reports">Healthcare provider discussions, patient community feedback, insurance forums</Signal>
+              <Signal source="Institutional Reports">Medical professional networks discussing efficacy and side effect profiles</Signal>
+            </KeySignals>
+            <ConsensusLevel calculation="real-time">[Real-time consensus analysis]</ConsensusLevel>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Technology/Product-Level Theme 3]</ThemeName>
+            <Example>Enterprise AI workload migration to cloud infrastructure</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: P5 instance architecture, NDv5 virtual machines, A3 compute instances</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Instance pricing announcements, enterprise contract wins, performance benchmarks</Signal>
+              <Signal source="Professional News">Partnership announcements with enterprise software vendors, availability zones expansion</Signal>
+              <Signal source="Professional News">Market adoption metrics, competitive positioning updates</Signal>
+              <Signal source="Institutional Reports">DevOps communities comparing performance/cost ratios, migration experiences</Signal>
+              <Signal source="Institutional Reports">Cloud architecture forums discussing workload optimization and vendor considerations</Signal>
+            </KeySignals>
+            <ConsensusLevel calculation="real-time">[Real-time consensus analysis]</ConsensusLevel>
+          </Theme>
+        </DominantThemes>
+        
+        <EmergingThemes type="array of json">
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Emerging Technology/Product Theme 1]</ThemeName>
+            <Example>Tesla 4680 battery cell production scaling in North American EV market</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: 4680 cylindrical cell design, silicon nanowire anode, dry electrode coating</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Early production announcements, pilot programs, technology partnerships</Signal>
+              <Signal source="Professional News">Investment announcements, facility construction, supply chain partnerships</Signal>
+              <Signal source="Professional News">Regulatory approvals, manufacturing scaling updates</Signal>
+              <Signal source="Institutional Reports">Early adopter communities, technical forums discussing advantages/limitations</Signal>
+              <Signal source="Institutional Reports">Industry experts discussing long-term implications</Signal>
+            </KeySignals>
+            <TimeHorizon estimation="dynamic">Dynamically estimated based on signal strength and development cycles</TimeHorizon>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Emerging Technology/Product Theme 2]</ThemeName>
+            <Example>Microsoft 365 Copilot enterprise deployment in knowledge worker productivity</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: GPT-4 integration, Microsoft Graph API, Power Platform automation</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Enterprise pilot program results, pricing model announcements, integration capabilities</Signal>
+              <Signal source="Professional News">Corporate partnership announcements, security and compliance certifications</Signal>
+              <Signal source="Professional News">Market adoption statistics, competitive feature comparisons</Signal>
+              <Signal source="Institutional Reports">IT administrator forums discussing deployment challenges, user productivity metrics</Signal>
+              <Signal source="Institutional Reports">Knowledge worker communities sharing use cases and workflow improvements</Signal>
+            </KeySignals>
+            <TimeHorizon estimation="dynamic">Dynamically estimated based on signal strength and development cycles</TimeHorizon>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Emerging Technology/Product Theme 3]</ThemeName>
+            <Example>Intel Gaudi3 AI accelerator market positioning for cost-sensitive AI inference workloads</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: Gaudi3 architecture, HBM2E memory, Ethernet fabric interconnect</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Performance benchmark releases, OEM partnership announcements, pricing strategies</Signal>
+              <Signal source="Professional News">Cloud provider adoption announcements, software ecosystem development</Signal>
+              <Signal source="Professional News">Market positioning updates, competitive analysis reports</Signal>
+              <Signal source="Institutional Reports">ML engineering communities discussing price/performance evaluations</Signal>
+              <Signal source="Institutional Reports">AI/ML forums evaluating total cost of ownership for different use cases</Signal>
+            </KeySignals>
+            <TimeHorizon estimation="dynamic">Dynamically estimated based on signal strength and development cycles</TimeHorizon>
+          </Theme>
+        </EmergingThemes>
+        
+        <FadingThemes type="array of json">
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Declining Technology/Product Theme 1]</ThemeName>
+            <Example>Oracle database migration to cloud-native alternatives like PostgreSQL and MongoDB Atlas</Example>
+            <TrsScore calculation="real-time" direction="negative">[Real-time calculated score - typically negative]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum type="decline">[Decline percentage from peak]</Momentum>
+            <Direction>typically negative</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: Oracle Database 19c, PostgreSQL 15, MongoDB Atlas serverless</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Migration case studies, cost savings announcements, vendor contract non-renewals</Signal>
+              <Signal source="Professional News">Cloud-first policies from enterprises, legacy system modernization budgets</Signal>
+              <Signal source="Professional News">Market share decline reports, competitive displacement analysis</Signal>
+              <Signal source="Institutional Reports">Database administrator forums discussing migration strategies and challenges</Signal>
+              <Signal source="Institutional Reports">Developer communities preferring cloud-native database architectures</Signal>
+            </KeySignals>
+            <Reason context="market">Auto-detected specific reason for technology/product decline with market context</Reason>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Declining Technology/Product Theme 2]</ThemeName>
+            <Example>VMware vSphere virtualization displacement by Kubernetes container orchestration</Example>
+            <TrsScore calculation="real-time" direction="negative">[Real-time calculated score - typically negative]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum type="decline">[Decline percentage from peak]</Momentum>
+            <Direction>typically negative</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: vSphere 8.0, Kubernetes 1.28, container runtime engines</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Container adoption statistics, infrastructure modernization announcements</Signal>
+              <Signal source="Professional News">Enterprise Kubernetes platform investments, hybrid cloud strategies</Signal>
+              <Signal source="Professional News">Virtualization market decline reports, technology transition analysis</Signal>
+              <Signal source="Institutional Reports">DevOps communities discussing container orchestration benefits</Signal>
+              <Signal source="Institutional Reports">Infrastructure engineers sharing migration experiences and cost comparisons</Signal>
+            </KeySignals>
+            <Reason context="market">Auto-detected specific reason for technology/product decline with market context</Reason>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Declining Technology/Product Theme 3]</ThemeName>
+            <Example>Traditional pharmacy benefit management margin compression from transparency pressures</Example>
+            <TrsScore calculation="real-time" direction="negative">[Real-time calculated score - typically negative]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum type="decline">[Decline percentage from peak]</Momentum>
+            <Direction>typically negative</Direction>
+            <AffectedGICSSectors type="array" detection="auto">[Auto-detected GICS sectors]</AffectedGICSSectors>
+            <AffectedGICSSubIndustries type="array" count="163" detection="auto">[Specific 163 sub-industries affected]</AffectedGICSSubIndustries>
+            <KeyTechnology>Specific technology/product focus: PBM formulary management systems, pharmacy network platforms, rebate processing</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Regulatory transparency requirements, employer direct contracting announcements</Signal>
+              <Signal source="Professional News">Alternative PBM models, direct pharmacy partnerships, biosimilar adoption</Signal>
+              <Signal source="Professional News">Margin compression reports, business model disruption analysis</Signal>
+              <Signal source="Institutional Reports">Healthcare benefits administrators discussing cost reduction strategies</Signal>
+              <Signal source="Institutional Reports">Healthcare finance forums analyzing PBM fee structure changes</Signal>
+            </KeySignals>
+            <Reason context="regulatory">Auto-detected specific reason for business model decline with regulatory context</Reason>
+          </Theme>
+        </FadingThemes>
+      </Category>
+      
+      <Category name="Cryptocurrency Analysis">
+        <DominantThemes type="array">
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Crypto Technology/Product Theme 1]</ThemeName>
+            <Example>Bitcoin ETF institutional flows and fee structures driving institutional adoption patterns</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedCryptos type="array" detection="auto" market_cap="top 10">Auto-detected from top 10 large-cap with specific product focus</AffectedCryptos>
+            <KeyTechnology>Specific technology/product focus: Bitcoin ETF structure, institutional custody solutions, spot market exposure</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Specific ETF flow data, institutional allocation announcements, fee reduction announcements</Signal>
+              <Signal source="Professional News">Pension fund and endowment allocation announcements, advisor platform integrations</Signal>
+              <Signal source="Professional News">Regulatory developments, institutional custody solutions</Signal>
+              <Signal source="Institutional Reports">Crypto investment communities comparing ETF expense ratios and tracking performance</Signal>
+              <Signal source="Institutional Reports">Financial advisor forums discussing client allocation strategies and compliance requirements</Signal>
+            </KeySignals>
+            <CrossIndustryImpact type="array">Specific traditional finance company impacts and responses</CrossIndustryImpact>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Crypto Technology/Product Theme 2]</ThemeName>
+            <Example>Ethereum Layer 2 scaling solutions transaction cost reduction and developer adoption</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedCryptos type="array" detection="auto" focus="scaling solutions">Auto-detected from top 10 large-cap with specific scaling solution focus</AffectedCryptos>
+            <KeyTechnology>Specific technology/product focus: Optimistic rollups, zk-SNARKs, state channels, plasma chains</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Transaction volume metrics, developer migration announcements, enterprise adoption case studies</Signal>
+              <Signal source="Professional News">Major DApp deployment announcements, bridge security improvements, ecosystem fund investments</Signal>
+              <Signal source="Professional News">Layer 2 adoption statistics, scaling solution comparisons</Signal>
+              <Signal source="Institutional Reports">DeFi communities discussing gas cost reductions and user experience improvements</Signal>
+              <Signal source="Institutional Reports">Developer communities sharing deployment experiences and technical performance data</Signal>
+            </KeySignals>
+            <CrossIndustryImpact type="array">Specific traditional payment processor and financial infrastructure impacts</CrossIndustryImpact>
+          </Theme>
+        </DominantThemes>
+        
+        <EmergingThemes type="array">
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Emerging Crypto Technology Theme 1]</ThemeName>
+            <Example>Real World Asset tokenization through major financial institution blockchain pilot programs</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedCryptos type="array" detection="auto" focus="RWA tokenization">Auto-detected from top 10 large-cap with RWA tokenization focus</AffectedCryptos>
+            <KeyTechnology>Specific technology/product focus: ERC-3643 security tokens, permissioned blockchains, smart contract escrow</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Tokenization pilot program announcements, regulatory sandbox participation, asset class expansion</Signal>
+              <Signal source="Professional News">Institutional partnership announcements, custody solution developments, compliance framework adoption</Signal>
+              <Signal source="Professional News">Traditional finance blockchain integration updates</Signal>
+              <Signal source="Institutional Reports">DeFi communities discussing traditional asset accessibility and yield opportunities</Signal>
+              <Signal source="Institutional Reports">Crypto investment forums analyzing traditional asset integration and market opportunity</Signal>
+            </KeySignals>
+            <TimeHorizon factors="regulatory" estimation="dynamic">Dynamically estimated adoption timeline with regulatory considerations</TimeHorizon>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Emerging Crypto Technology Theme 2]</ThemeName>
+            <Example>Central Bank Digital Currency pilot programs and stablecoin infrastructure development</Example>
+            <TrsScore calculation="real-time">[Real-time calculated score]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum calculation="real-time">[Real-time calculated momentum]</Momentum>
+            <Direction>positive/negative/neutral</Direction>
+            <AffectedCryptos type="array" detection="auto" focus="stablecoins and payments">Auto-detected stablecoins and payment-focused cryptocurrencies</AffectedCryptos>
+            <KeyTechnology>Specific technology/product focus: CBDC blockchain architecture, programmable money, offline payment capability</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">CBDC pilot program announcements, regulatory framework developments, payment infrastructure integration</Signal>
+              <Signal source="Professional News">Commercial bank CBDC integration plans, payment processor partnerships, cross-border payment improvements</Signal>
+              <Signal source="Professional News">Central bank digital currency policy updates</Signal>
+              <Signal source="Institutional Reports">Crypto policy communities discussing government digital currency implications</Signal>
+              <Signal source="Institutional Reports">Payment technology forums analyzing CBDC technical architecture</Signal>
+            </KeySignals>
+            <TimeHorizon factors="political/regulatory" estimation="dynamic">Dynamically estimated implementation timeline with political/regulatory factors</TimeHorizon>
+          </Theme>
+        </EmergingThemes>
+        
+        <FadingThemes type="array">
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Declining Crypto Technology Theme 1]</ThemeName>
+            <Example>NFT marketplace trading volume decline and creator royalty enforcement challenges</Example>
+            <TrsScore calculation="real-time" direction="negative">[Real-time calculated score - typically negative]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum type="decline">[Decline percentage from peak]</Momentum>
+            <Direction>typically negative</Direction>
+            <AffectedCryptos type="array" detection="auto" ecosystem="NFT">Auto-detected NFT-ecosystem cryptocurrencies</AffectedCryptos>
+            <KeyTechnology>Specific technology/product focus: ERC-721 standards, IPFS storage, royalty enforcement mechanisms</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Trading volume declines, marketplace consolidation announcements, creator program reductions</Signal>
+              <Signal source="Professional News">Enterprise NFT project cancellations, utility token value declines, platform fee structure changes</Signal>
+              <Signal source="Professional News">NFT market analysis reports, digital asset valuation challenges</Signal>
+              <Signal source="Institutional Reports">NFT creator communities discussing reduced sales and market saturation</Signal>
+              <Signal source="Institutional Reports">Digital art communities shifting focus to alternative monetization strategies</Signal>
+            </KeySignals>
+            <Reason context="market dynamics">Auto-detected specific reason for NFT ecosystem decline with market dynamics</Reason>
+          </Theme>
+          
+          <Theme>
+            <ThemeName precision="technology-level">[Precise Declining Crypto Technology Theme 2]</ThemeName>
+            <Example>Play-to-earn gaming token economics sustainability challenges and player retention issues</Example>
+            <TrsScore calculation="real-time" direction="negative">[Real-time calculated score - typically negative]</TrsScore>
+            <Coherence calculation="real-time">[Real-time calculated coherence]</Coherence>
+            <Momentum type="decline">[Decline percentage from peak]</Momentum>
+            <Direction>typically negative</Direction>
+            <AffectedCryptos type="array" detection="auto" focus="gaming and metaverse">Auto-detected gaming and metaverse tokens</AffectedCryptos>
+            <KeyTechnology>Specific technology/product focus: Gaming token economics, in-game NFT integration, play-to-earn reward mechanisms</KeyTechnology>
+            <KeySignals type="array">
+              <Signal source="Professional News">Player count declines, token value erosion, game developer pivots away from crypto integration</Signal>
+              <Signal source="Professional News">Traditional game publisher statements against blockchain integration, regulatory scrutiny of token mechanics</Signal>
+              <Signal source="Professional News">Gaming industry blockchain adoption analysis, play-to-earn sustainability reports</Signal>
+              <Signal source="Institutional Reports">Gaming communities expressing fatigue with token-based mechanics and unsustainable economics</Signal>
+              <Signal source="Institutional Reports">Game developer forums discussing alternative monetization without cryptocurrency requirements</Signal>
+            </KeySignals>
+            <Reason context="player behavior and economics">Auto-detected specific reason for gaming token decline with player behavior and economics</Reason>
+          </Theme>
+        </FadingThemes>
+      </Category>
+    </ThemeAnalysis>
+    
+    <ThemeEvolution type="json">
+      <NewlyDetected type="array">
+        <Theme>Dynamic theme 1</Theme>
+        <Theme>Dynamic theme 2</Theme>
+        <Theme>Dynamic theme 3</Theme>
+        <Theme>Dynamic theme 4</Theme>
+      </NewlyDetected>
+      
+      <GainingMomentum type="array">
+        <Theme>Dynamic theme 1</Theme>
+        <Theme>Dynamic theme 2</Theme>
+        <Theme>Dynamic theme 3</Theme>
+        <Theme>Dynamic theme 4</Theme>
+        <Theme>Dynamic theme 5</Theme>
+      </GainingMomentum>
+      
+      <LosingMomentum type="array">
+        <Theme>Dynamic theme 1</Theme>
+        <Theme>Dynamic theme 2</Theme>
+        <Theme>Dynamic theme 3</Theme>
+        <Theme>Dynamic theme 4</Theme>
+      </LosingMomentum>
+      
+      <DirectionShifts type="array of json">
+        <Shift>
+          <Theme>Dynamic theme name</Theme>
+          <PreviousDirection>previous sentiment</PreviousDirection>
+          <CurrentDirection>current sentiment</CurrentDirection>
+          <Reason context="market">Real-time analysis of sentiment shift with market context</Reason>
+        </Shift>
+      </DirectionShifts>
+    </ThemeEvolution>
+    
+    <RiskOpportunityBalance type="json">
+      <SystematicOpportunities type="array" detection="cross-sector">
+        <Opportunity>Dynamically detected cross-sector opportunity 1</Opportunity>
+        <Opportunity>Dynamically detected cross-sector opportunity 2</Opportunity>
+        <Opportunity>Dynamically detected cross-sector opportunity 3</Opportunity>
+        <Opportunity>Dynamically detected cross-sector opportunity 4</Opportunity>
+      </SystematicOpportunities>
+      
+      <SystematicRisks type="array" detection="cross-sector">
+        <Risk>Dynamically detected cross-sector risk 1</Risk>
+        <Risk>Dynamically detected cross-sector risk 2</Risk>
+        <Risk>Dynamically detected cross-sector risk 3</Risk>
+      </SystematicRisks>
+      
+      <IndustrySpecificRisks>
+        <Sector name="Dynamic GICS Sector 1" type="array">
+          <Risk>Dynamic risk 1</Risk>
+          <Risk>Dynamic risk 2</Risk>
+        </Sector>
+        <Sector name="Dynamic GICS Sector 2" type="array">
+          <Risk>Dynamic risk 1</Risk>
+          <Risk>Dynamic risk 2</Risk>
+        </Sector>
+        <Sector name="Dynamic GICS Sector 3" type="array">
+          <Risk>Dynamic risk 1</Risk>
+          <Risk>Dynamic risk 2</Risk>
+        </Sector>
+        <Sector name="Cryptocurrency" type="array">
+          <Risk>Dynamic crypto risk 1</Risk>
+          <Risk>Dynamic crypto risk 2</Risk>
+          <Risk>Dynamic crypto risk 3</Risk>
+        </Sector>
+      </IndustrySpecificRisks>
+    </RiskOpportunityBalance>
+  </WeeklyThemeIntelligenceReport>
+</MarketThemeDiscovery>
