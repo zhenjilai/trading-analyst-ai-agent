@@ -1,14 +1,19 @@
 {
-  "builds": [
+  "functions": {
+    "api/**/*.py": {
+      "maxDuration": 60
+    }
+  },
+  "crons": [
     {
-      "src": "api/webhook.py",
-      "use": "@vercel/python"
+      "path": "/api/webhook",
+      "schedule": "0 14 * * *"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/webhook",
-      "dest": "api/webhook.py"
+      "source": "/(.*)",
+      "destination": "/api/webhook.py"
     }
   ]
 }
