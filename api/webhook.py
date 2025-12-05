@@ -27,11 +27,15 @@ class handler(BaseHTTPRequestHandler):
 
             # 1. Initialize the Workflow
             # We pass credentials from Vercel Environment Variables
+            db_dsn = os.environ.get("DATABASE_URL")
+            
+            if not db_dsn:
+                 raise ValueError("❌ No database connection string found (DATABASE_URL missing).")
+             
             workflow = FOMCAnalysisWorkflow(
                 anthropic_api_key=os.environ.get("ANTHROPIC_API_KEY"),
                 db_connection_params={
-                    "url": os.environ.get("SUPABASE_URL"),
-                    "key": os.environ.get("SUPABASE_KEY")
+                    "dsn": db_dsn
                 },
                 langsmith_api_key=os.environ.get("LANGSMITH_API_KEY")
             )
