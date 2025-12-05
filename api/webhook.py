@@ -46,7 +46,7 @@ class handler(BaseHTTPRequestHandler):
                 
                 # Format the raw JSON into a readable message
                 formatter = TelegramFormatter()
-                formatted_message = formatter.format_fomc_analysis(result.get("data"))
+                formatted_message = formatter.format_analysis_for_telegram(result.get("data"), 'FOMC Analysis')
                 
                 # Send to all subscribed users
                 # We initialize UserHandler to get the list of users

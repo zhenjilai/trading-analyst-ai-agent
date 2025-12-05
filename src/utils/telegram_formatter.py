@@ -3,23 +3,27 @@ from typing import Dict, Any
 from langchain_core.messages import SystemMessage, HumanMessage
 from src.llm.openai_client import get_openai_client
 
-def format_analysis_for_telegram(data: Dict[str, Any], title: str) -> str:
+class TelegramFormatter:
     """
-    Formats analysis JSON into Telegram Markdown using OpenAI.
-    Args:
-        data: The dictionary containing the analysis.
-        title: The dynamic title (e.g., "🇺🇸 FOMC Analysis").
+    Class to format analysis results for Telegram messages.
     """
-    try:
-        llm = get_openai_client(model="o4-mini-2025-04-16")
-        
-        # 2. Serialize data safely
-        if hasattr(data, 'model_dump'):
-             content_str = json.dumps(data.model_dump(), indent=2, default=str)
-        else:
-             content_str = json.dumps(data, indent=2, default=str)
+    
+    def format_analysis_for_telegram(self, data: Dict[str, Any], title: str) -> str:
+        """
+        Internal method that uses OpenAI to generate the Markdown.
+        """
+        try:
+            # Using gpt-4o-mini (standard latest small model)
+            llm = get_openai_client(model="o4-mini-2025-04-16")
+            
+            # 1. Serialize data safely
+            if hasattr(data, 'model_dump'):
+                 content_str = json.dumps(data.model_dump(), indent=2, default=str)
+            else:
+                 content_str = json.dumps(data, indent=2, default=str)
 
-        system_prompt = f"""You are a formatter that converts any given text into **Telegram-optimized Markdown**.
+            # 2. Define the System Prompt
+            system_prompt = f"""You are a formatter that converts any given text into **Telegram-optimized Markdown**.
 Your output must be easy to read on mobile and should be encoded in Utf-8:
 
 1. **Headings & Structure**
@@ -35,15 +39,17 @@ Your output must be easy to read on mobile and should be encoded in Utf-8:
 4. **Links & Emojis**
 - Use inline links: `[label](URL)`.
 - Sprinkle in simple emojis (✅, 🔹, ⚠️) to highlight.
+
 You should retain the key and value exactly the same. The title should be {title}."""
 
-        messages = [
-            SystemMessage(content=system_prompt),
-            HumanMessage(content=content_str)
-        ]
-        
-        response = llm.invoke(messages)
-        return response.content
+            messages = [
+                SystemMessage(content=system_prompt),
+                HumanMessage(content=content_str)
+            ]
+            
+            # 3. Invoke LLM
+            response = llm.invoke(messages)
+            return response.content
 
-    except Exception as e:
-        return f"⚠️ **Error Formatting Analysis**\n{str(e)}"
+        except Exception as e:
+            return f"⚠️ **Error Formatting Analysis**\n{str(e)}"
