@@ -16,10 +16,8 @@ def get_claude_client(model="claude-4-sonnet-20250514"):
         api_key=settings.ANTHROPIC_API_KEY,
         max_tokens=64000,
         temperature=1, 
-        model_kwargs={
-            "thinking": {
-                "type": "enabled",
-                "budget_tokens": 20000
-            }
+        thinking={
+            "type": "enabled",
+            "budget_tokens": 20000
         }
     )
