@@ -3,6 +3,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from urllib.parse import urlparse, parse_qs
 
 # Add the project root to the Python path so imports work
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -25,10 +26,13 @@ class handler(BaseHTTPRequestHandler):
         try:
             print("🕒 Cron Trigger received. Initializing FOMC Workflow...")
 
-            # 1. Initialize the Workflow
-            # We pass credentials from Vercel Environment Variables
+            query_components = parse_qs(urlparse(self.path).query)
+            manual_date = query_components.get('date', [None])[0]
+
+            print(f"🕒 Trigger received. Date Override: {manual_date or 'None (Auto)'}")
+
+            # 2. Get Database Connection String
             db_dsn = os.environ.get("DATABASE_URL")
-            
             if not db_dsn:
                  raise ValueError("❌ No database connection string found (DATABASE_URL missing).")
              
@@ -50,7 +54,7 @@ class handler(BaseHTTPRequestHandler):
                 
                 # Format the raw JSON into a readable message
                 formatter = TelegramFormatter()
-                formatted_message = formatter.format_analysis_for_telegram(result.get("data"), 'FOMC Analysis')
+                formatted_message = formatter.format_analysis_for_telegram(result.get("data"), f"FOMC Analysis ({manual_date})")
                 
                 # Send to all subscribed users
                 # We initialize UserHandler to get the list of users
