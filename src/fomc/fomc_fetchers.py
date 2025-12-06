@@ -15,6 +15,16 @@ class FOMCDataFetcher:
         return datetime.now().strftime("%Y%m%d")
     
     @staticmethod
+    def normalize_date(date_str: Optional[str]) -> str:
+        """
+        Ensures date is in YYYYMMDD format for URLs.
+        Converts '2025-10-29' -> '20251029'.
+        """
+        if not date_str:
+            return FOMCDataFetcher.get_today()
+        return date_str.replace("-", "")
+    
+    @staticmethod
     def extract_date_from_url(url: str) -> Optional[str]:
         """
         Extract date from Federal Reserve URL (YYYY-MM-DD)
@@ -38,7 +48,7 @@ class StatementFetcher(FOMCDataFetcher):
     """Fetch FOMC Statement"""
     def fetch(self, date_str: Optional[str] = None) -> Dict:
         if date_str is None:
-            date_str = self.get_today()
+            date_str = self.normalize_date(date_str)
         
         url = f"{self.BASE_URL}/newsevents/pressreleases/monetary{date_str}a.htm"
 
@@ -79,7 +89,7 @@ class MinutesFetcher(FOMCDataFetcher):
     """Fetch FOMC Minutes"""
     def fetch(self, date_str: Optional[str] = None) -> Dict:
         if date_str is None:
-            date_str = self.get_today()
+            date_str = self.normalize_date(date_str)
         
         url = f"{self.BASE_URL}/monetarypolicy/fomcminutes{date_str}.htm"
         
@@ -120,7 +130,7 @@ class ProjectionNoteFetcher(FOMCDataFetcher):
     """Fetch FOMC Projection Materials"""
     def fetch(self, date_str: Optional[str] = None) -> Dict:
         if date_str is None:
-            date_str = self.get_today()
+            date_str = self.normalize_date(date_str)
         
         url = f"{self.BASE_URL}/monetarypolicy/fomcprojtabl{date_str}.htm"
         
@@ -153,7 +163,7 @@ class ImplementationNoteFetcher(FOMCDataFetcher):
     """Fetch FOMC Implementation Note"""
     def fetch(self, date_str: Optional[str] = None) -> Dict:
         if date_str is None:
-            date_str = self.get_today()
+            date_str = self.normalize_date(date_str)
         
         url = f"{self.BASE_URL}/newsevents/pressreleases/monetary{date_str}a1.htm"
         
