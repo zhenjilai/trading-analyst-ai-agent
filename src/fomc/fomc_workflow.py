@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, date
 from typing import Dict, Optional, Any, List, TypedDict
 
 # --- LangChain & LangGraph Imports ---
@@ -128,33 +128,17 @@ class FOMCAnalysisWorkflow:
                 return release_date <= today
             except ValueError: return False
 
-        # 1. Statement
-        stmt_date = fetched['statement'].get('new_release_date')
-        if stmt_date and is_valid_date(stmt_date):
-            self.db.upsert_statement(stmt_date, fetched['statement']['statement'])
-        elif stmt_date:
-            print(f"Skipped Statement Save: {stmt_date} is in the future.")
-
-        # 2. Minutes
-        min_date = fetched['minutes'].get('new_release_date')
-        if min_date and is_valid_date(min_date):
-            self.db.upsert_minutes(min_date, fetched['minutes']['minutes'])
-        elif min_date:
-            print(f"Skipped Minutes Save: {min_date} is in the future.")
-
-        # 3. Projection
-        proj_date = fetched['projection_note'].get('new_release_date')
-        if proj_date and is_valid_date(proj_date):
-            self.db.upsert_projection_note(proj_date, fetched['projection_note']['projection_note'])
-        elif proj_date:
-            print(f"Skipped Projection Save: {proj_date} is in the future.")
-
-        # 4. Implementation Note
-        impl_date = fetched['implementation_note'].get('new_release_date')
-        if impl_date and is_valid_date(impl_date):
-            self.db.upsert_implementation_note(impl_date, fetched['implementation_note']['implementation_note'])
-        elif impl_date:
-            print(f"Skipped Implementation Save: {impl_date} is in the future.")
+        for key in ['statement', 'minutes', 'projection_note', 'implementation_note']:
+            item = fetched.get(key, {})
+            d = item.get('new_release_date')
+            content = item.get(key) # key matches content field name mostly
+            
+            # Helper for specific DB methods
+            if d and is_valid_date(d):
+                if key == 'statement': self.db.upsert_statement(d, content)
+                elif key == 'minutes': self.db.upsert_minutes(d, content)
+                elif key == 'projection_note': self.db.upsert_projection_note(d, content)
+                elif key == 'implementation_note': self.db.upsert_implementation_note(d, content)
             
         return {"fetch_results": fetched}
 
@@ -182,87 +166,78 @@ class FOMCAnalysisWorkflow:
         print(">> Node: Check Logic")
         db_state = state["db_state"]
         fetched_results = state.get("fetch_results", {})
+        force_date = state.get("force_date")
         
-        # Extract DB Dates
         d_min = db_state["minutes_date"]
         d_stmt = db_state["statement_date"]
         d_impl = db_state["implementation_date"]
         d_proj = db_state["projection_date"]
-
-        # 2. Calculate Max Date (Latest Release)
-        # We only consider dates that are present (not None)
+        
         valid_dates = [d for d in [d_min, d_stmt, d_impl, d_proj] if d]
+        auto_max_date = max(valid_dates) if valid_dates else None
         
-        # If DB is empty, use force_date or default to today
-        if not valid_dates:
-             max_date = state.get("force_date") or datetime.now().strftime("%Y-%m-%d")
-        else:
-             max_date = max(valid_dates)
+        # Unified Target Date Logic
+        target_date = force_date if force_date else auto_max_date
         
-        # Helper to get content from fetch_results if dates match
-        def get_content(key, subkey, db_date):
-            # Only return content if the date matches the Max Date
-            if db_date != max_date:
-                return None
-            
-            # Fetch from "fetched_results" if the date matches
-            fetched_item = fetched_results.get(key, {})
-            fetched_date = fetched_item.get("new_release_date")
-            
-            if fetched_date == max_date:
-                return fetched_item.get(subkey)
-            
-            # Fallback: If not in fetch (maybe run from DB state only), 
-            # we would ideally query the DB content here.
-            # But per n8n flow, we usually analyze what we just fetched.
-            return fetched_item.get(subkey) # Try returning anyway if date matched logic
+        if not target_date:
+            # Fallback if DB is empty and no force date
+            target_date = datetime.now().strftime("%Y-%m-%d")
 
-        # Align Data
-        # If a document's date is NOT the max_date, we set it to None.
+        # 2. ALIGN DATA (Knockout Strategy)
+        #    We knockout any content that does not match 'target_date'
+        def get_aligned(key, subkey, candidate_date):
+            if candidate_date != target_date:
+                return None
+            # Fetch content from results (or DB if needed)
+            item = fetched_results.get(key, {})
+            if item.get("new_release_date") == target_date:
+                return item.get(subkey)
+            return None
+
         aligned = {
-            "max_release_date": max_date,
-            
-            "minutes_release_date": max_date if d_min == max_date else None,
-            "minutes_content": get_content("minutes", "minutes", d_min),
-            
-            "statement_release_date": max_date if d_stmt == max_date else None,
-            "statement": get_content("statement", "statement", d_stmt),
-            
-            "implementation_note_release_date": max_date if d_impl == max_date else None,
-            "implementation_note": get_content("implementation_note", "implementation_note", d_impl),
-            
-            "projection_note_release_date": max_date if d_proj == max_date else None,
-            "projection_note": get_content("projection_note", "projection_note", d_proj),
-            
+            "max_release_date": target_date,
+            "minutes_release_date": target_date if d_min == target_date else None,
+            "minutes_content": get_aligned("minutes", "minutes", d_min),
+            "statement_release_date": target_date if d_stmt == target_date else None,
+            "statement": get_aligned("statement", "statement", d_stmt),
+            "implementation_note_release_date": target_date if d_impl == target_date else None,
+            "implementation_note": get_aligned("implementation_note", "implementation_note", d_impl),
+            "projection_note_release_date": target_date if d_proj == target_date else None,
+            "projection_note": get_aligned("projection_note", "projection_note", d_proj),
             "history": db_state["history"]
         }
 
         # Check Against Last Verdict
-        last_stmt = db_state["verdict"].get("statement_date")
-        last_min = db_state["verdict"].get("minutes_date")
+        last_stmt_verdict = db_state["verdict"].get("statement_date")
+        last_min_verdict = db_state["verdict"].get("minutes_date")
         
-        minutes_rel = aligned["minutes_release_date"]
-        stmt_rel = aligned["statement_release_date"]
+        new_stmt = aligned["statement_release_date"]
+        new_min = aligned["minutes_release_date"]
         
-        should_run = False
-        reason = "No new updates"
-
-        if minutes_rel is None:
-            if stmt_rel and stmt_rel != last_stmt:
-                should_run = True
-                reason = f"New Statement ({stmt_rel})"
+        # n8n Logic: (minutes == null && stmt != last_stmt) || (minutes != null && minutes != last_min)
+        is_new_statement_only = (new_min is None) and (new_stmt is not None) and (new_stmt != last_stmt_verdict)
+        is_new_minutes = (new_min is not None) and (new_min != last_min_verdict)
+        
+        is_new_data = is_new_statement_only or is_new_minutes
+        
+        # Final Trigger: "If EITHER condition is met"
+        should_run = bool(force_date) or is_new_data
+        
+        # Construct Status Message
+        if force_date:
+            status_msg = f"Forced Run ({force_date})"
+        elif is_new_data:
+            status_msg = f"New Data Found ({target_date})"
         else:
-            if minutes_rel != last_min:
-                should_run = True
-                reason = f"New Minutes ({minutes_rel})"
+            status_msg = f"No new data (Max: {target_date})"
 
         final_out = {}
         if not should_run:
-            final_out = {"status": "skipped", "message": "Database up to date"}
+            final_out = {"status": "skipped", "message": status_msg}
 
         return {
             "should_run": should_run, 
-            "status_message": reason, 
+            "status_message": status_msg, 
             "aligned_data": aligned,
             "final_output": final_out
         }
