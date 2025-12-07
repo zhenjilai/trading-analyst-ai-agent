@@ -189,35 +189,51 @@ class FOMCAnalysisWorkflow:
         d_impl = db_state["implementation_date"]
         d_proj = db_state["projection_date"]
 
-        # Find Max Date
+        # 2. Calculate Max Date (Latest Release)
+        # We only consider dates that are present (not None)
         valid_dates = [d for d in [d_min, d_stmt, d_impl, d_proj] if d]
-        if not valid_dates:
-            return {
-                "should_run": False, 
-                "status_message": "No data in DB",
-                "final_output": {"status": "skipped", "message": "No data found"}
-            }
         
-        max_date = max(valid_dates)
+        # If DB is empty, use force_date or default to today
+        if not valid_dates:
+             max_date = state.get("force_date") or datetime.now().strftime("%Y-%m-%d")
+        else:
+             max_date = max(valid_dates)
         
         # Helper to get content from fetch_results if dates match
-        def get_content_from_fetch(key, subkey, target_date):
+        def get_content(key, subkey, db_date):
+            # Only return content if the date matches the Max Date
+            if db_date != max_date:
+                return None
+            
+            # Fetch from "fetched_results" if the date matches
             fetched_item = fetched_results.get(key, {})
-            if fetched_item.get("new_release_date") == target_date:
+            fetched_date = fetched_item.get("new_release_date")
+            
+            if fetched_date == max_date:
                 return fetched_item.get(subkey)
-            return None
+            
+            # Fallback: If not in fetch (maybe run from DB state only), 
+            # we would ideally query the DB content here.
+            # But per n8n flow, we usually analyze what we just fetched.
+            return fetched_item.get(subkey) # Try returning anyway if date matched logic
 
         # Align Data
+        # If a document's date is NOT the max_date, we set it to None.
         aligned = {
             "max_release_date": max_date,
-            "minutes_release_date": d_min if d_min == max_date else None,
-            "minutes_content": get_content_from_fetch("minutes", "minutes", max_date) if d_min == max_date else None,
-            "statement_release_date": d_stmt if d_stmt == max_date else None,
-            "statement": get_content_from_fetch("statement", "statement", max_date) if d_stmt == max_date else None,
-            "implementation_note_release_date": d_impl if d_impl == max_date else None,
-            "implementation_note": get_content_from_fetch("implementation_note", "implementation_note", max_date) if d_impl == max_date else None,
-            "projection_note_release_date": d_proj if d_proj == max_date else None,
-            "projection_note": get_content_from_fetch("projection_note", "projection_note", max_date) if d_proj == max_date else None,
+            
+            "minutes_release_date": max_date if d_min == max_date else None,
+            "minutes_content": get_content("minutes", "minutes", d_min),
+            
+            "statement_release_date": max_date if d_stmt == max_date else None,
+            "statement": get_content("statement", "statement", d_stmt),
+            
+            "implementation_note_release_date": max_date if d_impl == max_date else None,
+            "implementation_note": get_content("implementation_note", "implementation_note", d_impl),
+            
+            "projection_note_release_date": max_date if d_proj == max_date else None,
+            "projection_note": get_content("projection_note", "projection_note", d_proj),
+            
             "history": db_state["history"]
         }
 
@@ -353,10 +369,10 @@ class FOMCAnalysisWorkflow:
             "content": result.model_dump(mode='json')
         }
         
-        if row_data["statement_release_date"]:
+        if row_data["statement_release_date"] or row_data["minutes_release_date"]:
             success = self.db.save_fomc_analysis(row_data)
             if success:
-                 print(f"Successfully saved analysis for {row_data['statement_release_date']}")
+                 print(f"Successfully saved analysis for {row_data['statement_release_date'] or row_data['minutes_release_date']}")
             else:
                  print("Failed to save analysis to DB.")
             
@@ -368,5 +384,5 @@ class FOMCAnalysisWorkflow:
                 }
             }
         
-        print("Error: Missing statement date, cannot save analysis.")
-        return {"final_output": {"status": "error", "message": "Missing statement date"}}
+        print("Error: Missing primary dates (statement or minutes), cannot save.")
+        return {"final_output": {"status": "error", "message": "Missing statement/minutes date"}}
